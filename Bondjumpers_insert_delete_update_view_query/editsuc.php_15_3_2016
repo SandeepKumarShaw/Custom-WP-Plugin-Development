@@ -1,0 +1,65 @@
+<?php  
+/* 
+Template Name:editsuc page
+*/
+
+get_header();
+?>
+<?php 
+if(isset($_GET['uid'])){ 
+global $wpdb;
+ $id=$_GET['uid'];
+ $x=$_GET['uname'];
+$table_name = $wpdb->prefix . "bond";
+if($_FILES["uphoto"]["size"]>0)
+{
+	 $icon_img=$_FILES["uphoto"]["name"];
+     $path_array = wp_upload_dir();
+     $path = str_replace('\\', '/', $path_array['path']);
+     move_uploaded_file($_FILES["uphoto"]["tmp_name"],$path. "/" . $icon_img);
+     $upload_path=$path_array['url']."/";
+     $icon_img_path=$upload_path.$icon_img;
+     $sql="UPDATE $table_name SET lname='".$_POST['lname1']."',company='".$_POST['company1']."',phone='".$_POST['phone1']."',fname='".$_POST['fname1']."',gender='".$_POST['gender1']."',dob='".$_POST['dob3']."',age='".$_POST['age1']."',race='".$_POST['race1']."',height='".$_POST['height1']."',weight='".$_POST['weight1']."',country='".$_POST['country1']."',charge='".$_POST['charge1']."',dateofbond='".$_POST['dateofbond4']."',uphoto='$icon_img_path'where user_id='".$id."'";
+     $rez = $wpdb->query($sql);
+	 if ($rez>0){
+	 echo '<script type="text/javascript">';        
+     echo 'window.location= "http://bondjumpers.com/view?page=View&uname='.$x.'"';
+     echo '</script>'; 
+		  
+		  
+		}
+        else{
+		  echo "not";
+				
+        }
+     
+
+
+	 
+}
+else{
+	 
+	 $sql="UPDATE $table_name SET lname='".$_POST['lname1']."',company='".$_POST['company1']."',phone='".$_POST['phone1']."',fname='".$_POST['fname1']."',gender='".$_POST['gender1']."',dob='".$_POST['dob3']."',age='".$_POST['age1']."',race='".$_POST['race1']."',height='".$_POST['height1']."',weight='".$_POST['weight1']."',country='".$_POST['country1']."',charge='".$_POST['charge1']."',dateofbond='".$_POST['dateofbond4']."'where user_id='".$id."'";
+     $rez = $wpdb->query($sql);
+	 if ($rez>0){
+	 echo '<script type="text/javascript">';        
+     echo 'window.location= "http://bondjumpers.com/view?page=View&uname='.$x.'"';
+     echo '</script>'; 
+		  
+		  
+		}
+        
+     
+
+
+}
+
+
+			
+	
+	   
+}
+?>
+<?php //print_r($_POST);?>	
+<?php get_footer(); ?>
+

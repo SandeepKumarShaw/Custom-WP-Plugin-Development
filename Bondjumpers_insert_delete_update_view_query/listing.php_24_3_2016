@@ -1,0 +1,248 @@
+<?php  
+/* 
+Template Name:listing page
+*/
+
+get_header();
+?>
+
+ 
+
+
+<?php
+  if(isset($_POST['submit'])){    
+     $Error ="";         
+     if( empty($_POST["uname"]) || empty($_POST["password"])) {
+         $Error = 'Please don\'t leave the required field.';
+    } 
+     else{
+          global $wpdb;
+          $uname      = $_POST['uname'];
+          $password   = $_POST['password'];  
+          $table_name = $wpdb->prefix . "bondsignup";
+          $row        = $wpdb->get_results("SELECT * FROM $table_name WHERE uname='$uname' and password='$password'");
+          
+          if (count($row)>0){
+			  foreach ($row as $rows){
+				 
+				 $uname= $rows->uname;
+				 $email= $rows->email;
+				 
+				  
+				  
+				  }
+				//echo "suc";
+								               
+                
+                ?> 
+                
+   <form action="http://bondjumpers.com/insert?page=insert&uname=<?php echo $rows->uname; ?>" method="post" enctype="multipart/form-data"> 
+  
+    
+    <div class="listing_list">
+	<h4 style="font-size: 21px !important;margin:30px 0;">Hello: <?php echo $rows->uname;?></h4>
+<div class="lis_50" style="text-align:right;">
+    	<img id="image_upload_preview" width="220" height="170" src="<?php echo get_template_directory_uri(); ?>/testcode/unnamed-edited.jpg" alt="your image"/>
+    
+    </div>
+	
+    
+    
+        <div class="lis_50">
+        	
+            <div class="min_list" >
+            	<div class="lis_50_left">Last Name</div>
+            	<div class="lis_50_right"><input id="lname" name="lname1" class="input" type="text"></div>
+            <div class="clear"></div>
+            </div>
+            
+            <div class="min_list" >
+                <div class="lis_50_left">First Name</div>
+                <div class="lis_50_right"><input id="fname" name="fname1" class="input" type="text"></div>
+            <div class="clear"></div>
+            </div>
+			
+			            <div class="min_list" >
+            	 <div class="lis_50_right"><input type="hidden" id="uname" class="input" name="uname" value="<?php echo $_POST['uname']; ?>"></div>
+            <div class="clear"></div>
+            </div>
+			
+            <div class="min_list" >
+                <div class="lis_50_left">Email</div>
+                <div class="lis_50_right"><input id="email" name="email1" class="input" type="email"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+            
+                <div class="lis_50_left">Gender</div>
+                <div class="lis_50_right">
+                	<input type="radio" required="required" name="gender1"   value="M">Male 
+                	<br/> 
+                	<input type="radio" required="required" name="gender1"    value="F">Female</td>
+                </div>
+                
+            	<div class="clear"></div>
+           	</div>
+            
+            
+             
+            
+           <div class="min_list" >
+                <div class="lis_50_left">Date of Birth</div>
+                <div class="lis_50_right">
+					<input id="p1" name="month1"  maxlength="2"  class="input input_new01_01" type="text" style=" ">
+				    <input id="p6" name="day1"   maxlength="2"  class="input input_new01_02" type="text" style=" ">
+					<input id="p6" name="year1"   maxlength="4"  class="input input_new01_03" type="text" style=" "> 
+				</div>
+				
+				<!--<input id="p6" name="day1" size="3" maxlength="2"  class="input" type="text">
+				<input id="p7" name="year1" size="5" maxlength="4"  class="input" type="text"> -->
+           <div class="clear"></div>
+            </div>
+		   
+		   
+            
+            
+            <div class="min_list" >
+                <div class="lis_50_left">Age</div>
+                <div class="lis_50_right"><input id="age" name="age1" class="input"  type="text"></div>
+              <div class="clear"></div>
+            </div>      
+              <div class="min_list" >
+                <div class="lis_50_left">Race</div>
+                <div class="lis_50_right"><input id="race" name="race1" class="input"  type="text"></div>
+             <div class="clear"></div>
+            </div>
+             
+             
+             <div class="min_list" >
+                <div class="lis_50_left">Height</div>
+                <div class="lis_50_right"><input id="height" name="height1" class="input"  type="text"></div>
+             <div class="clear"></div>
+            </div>
+             <div class="min_list" >
+                <div class="lis_50_left">Weight</div>
+                <div class="lis_50_right"><input id="weight" name="weight1" class="input"  type="text"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Bonding Company</div>
+                <div class="lis_50_right"><input id="company" name="company1" class="input"  type="text" ></div>
+           <div class="clear"></div>
+            </div>
+			<div class="min_list" >
+                <div class="lis_50_left">Phone No.</div>
+                <div class="lis_50_right"><input id="phone" name="phone1" class="input"  type="text" ></div>
+           <div class="clear"></div>
+            </div>
+             <div class="min_list" >
+                <div class="lis_50_left">County</div>
+                <div class="lis_50_right"><input id="country" name="country1" class="input"  type="text"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Charge</div>
+                <div class="lis_50_right"><input id="charge" name="charge1" class="input"  type="text"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Date Of Bond</div>
+                 <div class="lis_50_right">
+				    <input id="p2" name="month2"  maxlength="2"  class="input input_new01_01" type="text" style=" ">
+				    <input id="p8" name="day2"   maxlength="2"  class="input input_new01_02" type="text" style=" ">
+					<input id="p9" name="year2"   maxlength="4"  class="input input_new01_03" type="text" style=" "></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Upload Photo</div>
+                <div class="lis_50_right"><input id="inputFile" name="uphoto" type="file" class="input"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+            	<div class="lis_50_left">&nbsp;</div>
+                <div class="lis_50_right" style="text-align:right;">
+                	<a class="button" href="http://bondjumpers.com/view?page=View&uname=<?php echo $rows->uname; ?>">View Record</a>
+                	<input type="submit" name="insert" style="text-align:right;">
+                </div>
+            <div class="clear"></div>
+            </div>
+            
+        <div class="clear"></div>
+        </div>
+        
+        
+    
+    
+    
+    <div class="clear"></div>
+    </div>
+    
+        
+     </form>
+	 <div></div>
+	 
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+      <script language="javascript" type="text/javascript">
+          function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_upload_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#inputFile").change(function () {
+        readURL(this);
+    });
+      </script>  
+                
+     <style>
+     
+     .login,.signup,.or{display:none;}
+     
+     .logout{display:block;}
+     
+     
+     </style>           
+                
+                
+            
+		  <?php  }
+            else{
+				echo "Please enter valid username and password";
+				
+            
+		    }
+             
+            
+ }                         
+                         //echo  $wpdb->last_error;
+                        //echo $wpdb->last_query ; 
+
+}
+?>	
+ 
+
+
+<?php //print_r($_POST);?>	
+<style><link rel="stylesheet" type="text/css" href="<?php echo get_template_directory(); ?>/jquery.datetimepicker.css"/ ></style>
+<!--<script src="<//?php echo get_template_directory(); ?>/datetimepicker-master/jquery.js"></script>
+<script src="<//?php echo get_template_directory(); ?>/datetimepicker-master/jquery.datetimepicker.full.min.js"></script>
+<script>
+jQuery('#datetimepicker').datetimepicker({
+  format:'d.m.Y H:i',
+  inline:true,
+  lang:'ru'
+});
+</script>-->
+<style>
+			.input_new01_01 { width:50px !important; float: left;}
+			.input_new01_02 { width:50px!important; float: left; margin-left: 10px; margin-right: 10px;}
+			.input_new01_03 { width:68px!important; float: left;}
+			
+		   </style>
+<?php get_footer(); ?>

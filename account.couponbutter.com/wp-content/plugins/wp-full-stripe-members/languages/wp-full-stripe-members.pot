@@ -1,0 +1,414 @@
+# Copyright (C) 2016 Mammothology
+# This file is distributed under the same license as the WP Full Stripe Members package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Full Stripe Members 1.2.0\n"
+"Report-Msgid-Bugs-To: https://mammothology.com/forums/\n"
+"POT-Creation-Date: 2016-05-13 20:06:06+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: grunt-wp-i18n 0.5.3\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+
+#: include/wpfs-members-admin.php:248 include/wpfs-members-admin.php:287
+#: include/wpfs-members-admin.php:331 include/wpfs-members-admin.php:360
+msgid "No member found. Please re-log and try again."
+msgstr ""
+
+#: include/wpfs-members-front.php:55
+msgid "WPFS Members"
+msgstr ""
+
+#: include/wpfs-members-main.php:289
+msgid "Membership updated successfully."
+msgstr ""
+
+#: include/wpfs-members-main.php:290
+msgid "Membership canceled successfully."
+msgstr ""
+
+#: include/wpfs-members-main.php:291
+msgid "Credit card updated successfully."
+msgstr ""
+
+#: include/wpfs-members-main.php:294
+#. translators: 1: currency symbol/code, 2: amount, 3: interval in singular
+msgid "Price is %1$s%2$.2f per %3$s"
+msgstr ""
+
+#: include/wpfs-members-main.php:297
+#. translators: 1: currency symbol/code, 2: amount, 3: interval count > 1, 4:
+#. interval in plural
+msgid "Price is %1$s%2$.2f per %3$d %4$s"
+msgstr ""
+
+#: include/wpfs-members-main.php:495
+msgid "week"
+msgid_plural "weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/wpfs-members-main.php:497
+msgid "month"
+msgid_plural "months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/wpfs-members-main.php:499
+msgid "year"
+msgid_plural "years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: include/wpfs-members-main.php:510
+#. translators: Membership role 'No Access'
+msgid "No Access"
+msgstr ""
+
+#: include/wpfs-members-main.php:513
+#. translators: Membership role 'Basic'
+msgid "Basic"
+msgstr ""
+
+#: include/wpfs-members-main.php:516
+#. translators: Membership role 'Bronze'
+msgid "Bronze"
+msgstr ""
+
+#: include/wpfs-members-main.php:519
+#. translators: Membership role 'Silver'
+msgid "Silver"
+msgstr ""
+
+#: include/wpfs-members-main.php:522
+#. translators: Membership role 'Gold'
+msgid "Gold"
+msgstr ""
+
+#: include/wpfs-members-main.php:525
+#. translators: Membership role 'All Access'
+msgid "All Access"
+msgstr ""
+
+#: include/wpfs-members-main.php:538
+#. translators: Stripe subscription status code 'Active'
+msgid "Active"
+msgstr ""
+
+#: include/wpfs-members-main.php:541
+#. translators: Stripe subscription status code 'Cancelled'
+msgid "Cancelled"
+msgstr ""
+
+#: include/wpfs-members-main.php:544
+#. translators: Stripe subscription status code 'Cancelled'
+msgid "Canceling"
+msgstr ""
+
+#: include/wpfs-members-main.php:547
+#. translators: Stripe subscription status code 'Past due'
+msgid "Past due"
+msgstr ""
+
+#: include/wpfs-members-main.php:550
+#. translators: Stripe subscription status code 'Unpaid'
+msgid "Unpaid"
+msgstr ""
+
+#: include/wpfs-members-main.php:553
+#. translators: Stripe subscription status code 'Trialing'
+msgid "Trialing"
+msgstr ""
+
+#: include/wpfs-members-main.php:565
+#. translators: message for Stripe error code 'invalid_number'
+msgid "The card number is not a valid credit card number."
+msgstr ""
+
+#: include/wpfs-members-main.php:568
+#. translators: message for Stripe error code 'invalid_expiry_month'
+msgid "The card's expiration month is invalid."
+msgstr ""
+
+#: include/wpfs-members-main.php:571
+#. translators: message for Stripe error code 'invalid_expiry_year'
+msgid "The card's expiration year is invalid."
+msgstr ""
+
+#: include/wpfs-members-main.php:574
+#. translators: message for Stripe error code 'invalid_cvc'
+msgid "The card's security code is invalid."
+msgstr ""
+
+#: include/wpfs-members-main.php:577
+#. translators: message for Stripe error code 'incorrect_number'
+msgid "The card number is incorrect."
+msgstr ""
+
+#: include/wpfs-members-main.php:580
+#. translators: message for Stripe error code 'expired_card'
+msgid "The card has expired."
+msgstr ""
+
+#: include/wpfs-members-main.php:583
+#. translators: message for Stripe error code 'incorrect_cvc'
+msgid "The card's security code is incorrect."
+msgstr ""
+
+#: include/wpfs-members-main.php:586
+#. translators: message for Stripe error code 'incorrect_zip'
+msgid "The card's zip code failed validation."
+msgstr ""
+
+#: include/wpfs-members-main.php:589
+#. translators: message for Stripe error code 'card_declined'
+msgid "The card was declined."
+msgstr ""
+
+#: include/wpfs-members-main.php:592
+#. translators: message for Stripe error code 'missing'
+msgid "There is no card on a customer that is being charged."
+msgstr ""
+
+#: include/wpfs-members-main.php:595
+#. translators: message for Stripe error code 'processing_error'
+msgid "An error occurred while processing the card."
+msgstr ""
+
+#: include/wpfs-members-table-members.php:39
+msgid "Member ID"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:40
+msgid "Email"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:41
+msgid "Role"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:42
+msgid "Plan ID"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:43
+msgid "Stripe Customer ID"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:44
+msgid "Joined"
+msgstr ""
+
+#: include/wpfs-members-table-members.php:45
+msgid "Actions"
+msgstr ""
+
+#: views/members_account.php:9
+msgid "My Account"
+msgstr ""
+
+#: views/members_account.php:12
+msgid "DEMO VERSION: Updating membership is disabled."
+msgstr ""
+
+#: views/members_account.php:17
+msgid "Membership Level"
+msgstr ""
+
+#: views/members_account.php:21
+msgid "Membership Price"
+msgstr ""
+
+#: views/members_account.php:27
+#. translators: 1: currency symbol/code, 2: amount, 3: inverval count > 1
+msgid "%1$s%2$.2f Weekly"
+msgid_plural "%1$s%2$.2f per %3$d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/members_account.php:30
+#. translators: 1: currency symbol/code, 2: amount, 3: inverval count > 1
+msgid "%1$s%2$.2f Monthly"
+msgid_plural "%1$s%2$2f per %3$d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/members_account.php:33
+#. translators: 1: currency symbol/code, 2: amount, 3: inverval count > 1
+msgid "%1$s%2$.2f Yearly"
+msgid_plural "%1$s%2$.2f per %3$d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views/members_account.php:41
+msgid "Membership End Date"
+msgstr ""
+
+#: views/members_account.php:43
+msgid "Next Billing Date"
+msgstr ""
+
+#: views/members_account.php:55
+msgid "Membership Status"
+msgstr ""
+
+#: views/members_account.php:69
+msgid "Select New Level"
+msgstr ""
+
+#: views/members_account.php:92
+msgid "(Re-join)"
+msgstr ""
+
+#: views/members_account.php:99
+msgid "Change Membership Level"
+msgstr ""
+
+#: views/members_account.php:101
+msgid "Changing membership will prorate subscription costs."
+msgstr ""
+
+#: views/members_account.php:120
+msgid ""
+"You can add new credit card details here. Your old details will be removed "
+"and future payments taken from this card."
+msgstr ""
+
+#: views/members_account.php:124 views/members_account.php:181
+msgid "Update Credit Card"
+msgstr ""
+
+#: views/members_account.php:130
+msgid "Card Holder's Name"
+msgstr ""
+
+#: views/members_account.php:136
+msgid "Card Number"
+msgstr ""
+
+#: views/members_account.php:140
+msgid "Card Expiry Month"
+msgstr ""
+
+#: views/members_account.php:143
+msgid "January"
+msgstr ""
+
+#: views/members_account.php:144
+msgid "February"
+msgstr ""
+
+#: views/members_account.php:145
+msgid "March"
+msgstr ""
+
+#: views/members_account.php:146
+msgid "April"
+msgstr ""
+
+#: views/members_account.php:147
+msgid "May"
+msgstr ""
+
+#: views/members_account.php:148
+msgid "June"
+msgstr ""
+
+#: views/members_account.php:149
+msgid "July"
+msgstr ""
+
+#: views/members_account.php:150
+msgid "August"
+msgstr ""
+
+#: views/members_account.php:151
+msgid "September"
+msgstr ""
+
+#: views/members_account.php:152
+msgid "October"
+msgstr ""
+
+#: views/members_account.php:153
+msgid "November"
+msgstr ""
+
+#: views/members_account.php:154
+msgid "December"
+msgstr ""
+
+#: views/members_account.php:159
+msgid "Card Expiry Year"
+msgstr ""
+
+#: views/members_account.php:175
+msgid "Card CVC"
+msgstr ""
+
+#: views/members_account.php:199
+msgid ""
+"You will not be charged again and your subscription will remain active "
+"until the end of the current billing period."
+msgstr ""
+
+#: views/members_account.php:203
+msgid "Cancel Membership"
+msgstr ""
+
+#: views/members_account.php:210
+msgid "Are you sure you want to cancel your membership?"
+msgstr ""
+
+#: views/members_account.php:212
+msgid "Yes, Cancel My Membership"
+msgstr ""
+
+#: views/members_account.php:215
+msgid "No, Don't Cancel My Membership"
+msgstr ""
+
+#: views/members_page.php:10
+msgid "Full Stripe Members"
+msgstr ""
+
+#: views/members_page.php:296
+#. translators: 1: current version
+msgid "Full Stripe Members Help (v%s)"
+msgstr ""
+
+#: views/non_member_account.php:5
+msgid "You are not a member of this website."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WP Full Stripe Members"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://paymentsplugin.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Fully featured membership add-on for WP Full Stripe.  Create premium "
+"content for subscribers only."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Mammothology"
+msgstr ""

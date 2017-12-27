@@ -1,0 +1,116 @@
+<?php 
+
+/*
+Template Name: Active Coupon
+*/
+
+?>
+<?php get_header(); ?>
+<body>
+<?php  
+if(!isset($_SESSION['user_id'])){
+   //header("Location: http://localhost/coupon.demostage.net/");
+        //exit();
+  wp_redirect("http://account.couponbutter.com/");
+     exit();
+}    
+else{?>
+<?php 
+
+//if(isset($_SESSION['image'])) :
+//echo $_SESSION['image'];
+//endif;
+//$table_name=$wpdb->prefix ."coupon_create";
+ ?>
+<section class="manage_cupon">
+<div class="mainsheader">
+<div class="container">
+                   <div class="row strt" id="frsts_sc">
+           <div class="col-md-12 sc_logo">
+             <div class="sc_logos_in">
+            <img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/coupon-butter-logo.png" class="img-responsive"/>
+        </div>
+        </div>
+        </div></div>
+        </div>
+
+<div class="menu_header">
+             <div class="container">
+             <div class="row strt">
+             
+             <div class="col-md-5">
+             <div class="header_tx">
+                  <p>Active Coupon</p>
+             </div>
+             </div>
+
+     <?php include( get_template_directory() . '/menu_header.php'); ?>
+        
+        <div class="back_color">
+        <div class="container ">
+        <div class="company_name_bx center_top">
+        <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Coupon Name </th>
+        <th>status</th>
+        <th>coupons redeemed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+if(isset($_SESSION['user_id']))
+
+
+{
+//echo $_SESSION['user_id'];
+  $sql="SELECT * FROM wp_coupon_create where coupon_status = 'Active'";
+  //echo $sql;
+
+  $row = $wpdb->get_results($sql);
+   $date = date('m/d/Y');
+
+foreach ($row as $rows){ 
+
+ $tempArr=explode('/', $rows->coupon_end_date);
+$date2 = date($rows->coupon_end_date, mktime(0, 0, 0, $tempArr[1], $tempArr[0], $tempArr[2]));
+
+        ?>
+   <?php //if($rows->coupon_end_date >= $date) {
+
+if(strtotime($date2) >= strtotime($date)){
+    ?>
+      <tr>
+        <td><a href="http://account.couponbutter.com/coupon/?coupon_id=<?php echo $rows->coupon_id; ?>"><?php echo $rows->coupon_name; ?> </a></td>
+       
+       
+      <td><?php echo $rows->coupon_status; ?>  </td>
+        <td><?php echo $rows->coupon_reedem; ?> </td>
+      </tr>
+      <?php }
+    }
+      }
+      ?>
+    </tbody>
+  </table>
+        
+       </div>
+       
+       <div class="add_new_cupon">
+        <a href="http://account.couponbutter.com/coupon/"><button type="button" class="btn btn-danger copun_btn2">ADD NEW COUPON</button></a>
+
+       
+
+  <!-- Modal -->
+  
+       
+       </div>
+       
+       </div>
+        
+        
+        </div>
+        
+   
+</section><?php } ?>
+<?php get_footer();?>

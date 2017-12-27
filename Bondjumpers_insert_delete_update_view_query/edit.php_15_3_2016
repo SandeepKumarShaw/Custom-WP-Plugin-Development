@@ -1,0 +1,199 @@
+<?php  
+/* 
+Template Name:edit page
+*/
+
+get_header();
+?>
+<?php 
+if(isset($_GET['uid'])){ 
+global $wpdb;
+ $id=$_GET['uid'];
+ $x=$_GET['uname'];
+$table_name = $wpdb->prefix . "bond";
+    
+          $row = $wpdb->get_results("SELECT * FROM $table_name WHERE user_id=$id");
+          
+          //print_r($row);
+          
+          
+			  foreach ($row as $rows){ 
+			  $user_id=$rows->user_id; 
+				 $lname=$rows->lname;
+				 $fname= $rows->fname;
+				 $gender= $rows->gender;				
+				 $dob= $rows->dob;
+				 $age= $rows->age;
+				 $race= $rows->race;
+				 $height= $rows->height;				
+				 $weight=$rows->weight;
+				 $company=$rows->company;
+				 $country=$rows->country;
+				 $charge=$rows->charge;
+				 $phone=$rows->phone;
+				 $dateofbond=$rows->dateofbond;
+				 $uphoto=$rows->uphoto;
+			  }
+			 ?>
+				  
+				 
+	    <form action="http://bondjumpers.com/update?page=update&uid=<?php echo $user_id; ?>&uname=<?php echo $rows->uname; ?>" method="post" enctype="multipart/form-data"> 
+  
+    
+    <div class="listing_list">
+	<h4 style="font-size: 21px !important;margin:30px 0;">Hello: <?php echo $rows->uname;?></h4>
+<div class="lis_50" style="text-align:right;">
+    	<img width="220" height="170" src="<?php echo $rows->uphoto;?>"/>
+    </div>
+	
+    
+    
+        <div class="lis_50">
+        	
+            <div class="min_list" >
+            	<div class="lis_50_left">Last Name</div>
+            	<div class="lis_50_right"><input id="lname" name="lname1" class="input" type="text" value="<?php echo $lname; ?>" ></div>
+            <div class="clear"></div>
+            </div>
+            
+            <div class="min_list" >
+                <div class="lis_50_left">First Name</div>
+                <div class="lis_50_right"><input id="fname" name="fname1" class="input" type="text" value="<?php echo $fname; ?>" ></div>
+            <div class="clear"></div>
+            </div>
+            
+            
+            <div class="min_list" >
+            
+                <div class="lis_50_left">Gender</div>
+                <div class="lis_50_right">
+                	<input type="radio" name="gender1" <?php if (isset($gender) && $gender=="M") echo "checked";?> value="M" >Male 
+                	<br/> 
+                	<input type="radio" name="gender1" <?php if (isset($gender) && $gender=="F") echo "checked";?> value="F">Female</td>
+                </div>
+                
+            	<div class="clear"></div>
+           	</div>
+            
+            
+             
+            
+           <div class="min_list" >
+                <div class="lis_50_left">Date of Birth</div>
+                <div class="lis_50_right"><input id="p3" name="dob3" class="input" type="text" value="<?php echo $dob; ?>" ></div>
+           <div class="clear"></div>
+            </div>
+            
+            
+            <div class="min_list" >
+                <div class="lis_50_left">Age</div>
+                <div class="lis_50_right"><input id="age" name="age1" class="input"  type="text" value="<?php echo $age;?>"></div>
+              <div class="clear"></div>
+            </div>      
+              <div class="min_list" >
+                <div class="lis_50_left">Race</div>
+                <div class="lis_50_right"><input id="race" name="race1" class="input"  type="text" value="<?php echo $race;?>"></div>
+             <div class="clear"></div>
+            </div>
+             
+             
+             <div class="min_list" >
+                <div class="lis_50_left">Height</div>
+                <div class="lis_50_right"><input id="height" name="height1" class="input"  type="text" value="<?php echo $height; ?>" ></div>
+             <div class="clear"></div>
+            </div>
+             <div class="min_list" >
+                <div class="lis_50_left">Weight</div>
+                <div class="lis_50_right"><input id="weight" name="weight1" class="input"  type="text" value="<?php echo $weight; ?>" ></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Bonding Company</div>
+                <div class="lis_50_right"><input id="company" name="company1" class="input"  type="text" value="<?php echo $company; ?>"></div>
+           <div class="clear"></div>
+			</div>
+			<div class="min_list" >
+                <div class="lis_50_left">Phone No.</div>
+                <div class="lis_50_right"><input id="phone" name="phone1" class="input"  type="text" value="<?php echo $phone; ?>"></div>
+           <div class="clear"></div>
+			</div>
+             <div class="min_list" >
+                <div class="lis_50_left">County</div>
+                <div class="lis_50_right"><input id="country" name="country1" class="input"  type="text" value="<?php echo $country; ?>"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Charge</div>
+                <div class="lis_50_right"><input id="charge" name="charge1" class="input"  type="text" value="<?php echo $charge; ?>"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Date Of Bond</div>
+                <div class="lis_50_right"><input id="p4" name="dateofbond4" class="input"  type="text" value="<?php echo $dateofbond; ?>"></div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+                <div class="lis_50_left">Upload Photo</div>
+                <div class="lis_50_right">
+				<input type="hidden" name="uphoto" value="<?php echo $uphoto; ?>" />
+				<input id="uphoto" name="uphoto" type="file" class="input"  value="<?php echo $uphoto; ?>">
+				</div>
+            <div class="clear"></div>
+            </div>
+            <div class="min_list" >
+            	<div class="lis_50_left">&nbsp;</div>
+                <div class="lis_50_right" style="text-align:right;"><input type="submit" name="edit" style="text-align:right;"></div>
+            <div class="clear"></div>
+            </div>
+            
+        <div class="clear"></div>
+        </div>
+        
+        
+    
+    
+    
+    <div class="clear"></div>
+    
+	</div>
+        
+     </form>
+     
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+      <script language="javascript" type="text/javascript">
+          function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image_upload_preview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#inputFile").change(function () {
+        readURL(this);
+    });
+      </script>
+
+      
+     <style>
+     
+     .login,.signup,.or{display:none;}
+     
+     .logout{display:block;}
+     
+     
+     </style>           
+                
+                
+            
+<?php 
+} 
+ 
+?>
+<?php //print_r($_POST);?>	
+<?php get_footer(); ?>
+

@@ -1,0 +1,562 @@
+/*
+Theme Name: CouponButter
+Theme URI:http://coupon.demostage.net/
+Description: A premium theme by sandeep.
+Version: 1.0
+Author: sandeep
+Author URI:http://coupon.demostage.net/
+*/
+
+
+
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+  font-family: 'SinkinSans-300Light';
+  src: url('../fonts/SinkinSans-300Light.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SinkinSans-600SemiBold';
+  src: url('../fonts/SinkinSans-600SemiBold.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SinkinSans-500Medium';
+  src: url('../fonts/SinkinSans-500Medium.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SinkinSans-400Regular';
+  src: url('../fonts/SinkinSans-400Regular.eot') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*=======================
+login_page start
+====================*/
+*{ margin:0; padding:0;}
+body{ background:#e1e7ed;}
+p{ padding:0; margin:0;}
+.login_bx {
+    max-width: 362px;
+    /* height: 395px; */
+    margin: auto;
+    border: 1px solid #e1e7ed;
+    margin-top: 140px;
+    background: #ffffff;
+	padding-bottom:30px;
+	box-shadow: 0px 1px 3px #c3c0c0;
+}
+.fist_login{    width: 85%;
+    margin: 30px auto;
+}
+.form_login{    width: 85%;
+    margin: 21px auto;
+}
+.line_cl {
+    border: 1px solid #e6dbdb;
+}
+.form_hover {
+    width: 100%;
+    height: 47px;
+	padding-left: 48px;
+}
+.form_hover{ 
+    width: 100%;
+    height: 47px;
+	padding-left: 48px;
+}
+.btn_red {
+    width: 100%;
+    height: 48px;
+    border-radius: 53px;
+    margin: auto;
+    background: #ef4923;
+	 font-family: 'SinkinSans-500Medium';
+	 font-size:12px;
+}
+.col-md-12.forget_psw p {
+    text-align: center;
+    color: #ccc;
+}
+.mgtp{ margin-bottom:21px !important;}
+.form_hover{ color:#ccc !important;}
+.form_hover:hover{ border:1px solid #209bd1 !important; color:#000;}
+.usersa{ position:absolute; margin: 15px 20px; color:#ccc; font-size: 20px;}
+.input_filds:hover .usersa{ color:#209bd1;}
+
+/*=======================
+login_page end
+====================*/
+
+
+
+
+
+
+
+
+
+
+/*=====================
+manage-cupon start
+============================*/
+.sc_logos_in {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.menu_header{
+	 width:100%; 
+	 background:#ef4923;
+}
+.header_tx p {
+    color: #fff;
+    padding: 19px 0 10px 56px;
+     font-family: 'SinkinSans-300Light';
+    font-size: 24px;
+}
+
+.menu_sedction {
+	height:auto;
+    width: 100%;
+}
+.menu_sedction ul li a {
+    padding-left: 0;
+    padding-right: 0;
+	color:#fff;
+  font-family: 'SinkinSans-600SemiBold';
+	font-size:13px;
+	line-height: 0px;
+	text-decoration:none;
+}button#menu1 {
+    font-size: 14px;
+	 font-family: 'SinkinSans-300Light' !important;
+}
+.menu_sedction ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 17px 0px 0px 55px;
+}
+.menu_sedction ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.mens {
+    padding: 0px 0px 0px 22px;
+    font-size: 17px;
+}
+.pans {
+    padding: 0px 0px 0px 44px;
+    font-size: 17px;
+}
+.callss {
+    padding: 0px 0px 0px 15px;
+    font-size: 17px;
+}
+.company_name {
+    width: 51px;
+    height: 51px;
+    border: 1px solid red;
+    border-radius: 50%;
+    margin: 11px 0px 12px 0;
+    background: white;
+	float:left;
+	
+}
+
+.main_comp .dropdown {
+    float: left;
+    margin: 25px 0px 0px 0px;
+}
+.main_comp .dropdown .btn-primary {
+    /* color: #fff; */
+    /* background-color: #337ab7; */
+   
+    background: none;
+    border: none;
+}
+.main_comp .dropdown .btn-primary:focus{
+    background: none;
+    border: none;
+}
+.sc_logos_in img {
+    margin: 0px 0px 0px 57px;
+}
+.company_name_bx table tr th {
+    background: #289fd2;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    border: none;
+    text-transform: uppercase;
+	  font-family: 'SinkinSans-500Medium';
+	  font-size:15px;
+}
+.company_name_bx table tr th:first-child {
+    text-align: left;
+}
+.strt{ margin:0;}
+.center_top {
+    margin-top: 100px;
+}
+.company_name_bx table.table.table-bordered tr td {
+    width: 10%;
+}
+.company_name_bx table.table.table-bordered tr td:first-child {
+    text-align: left;
+	
+}
+.company_name_bx table.table.table-bordered tr td {
+    width: 10%;
+	 color:#7f7f7f;
+    text-align: center;
+    height: 80px;
+    vertical-align: inherit;
+    padding: 20px;
+	  font-family: 'SinkinSans-400Regular';
+	  font-size:14px;
+	text-decoration:none !important;
+	
+}
+.copun_btn2 {
+    width: 238px;
+    height: 44px;
+    border-radius: 53px;
+    margin: auto;
+    background: #ef4923;
+	 font-family: 'SinkinSans-600SemiBold';
+	 font-size:15px;
+	 
+}
+.back_color {
+    width: 100%;
+    background: #fff;
+	padding-bottom:100px;
+}
+.company_name_bx table.table.table-bordered tr td a:first-child:hover {
+	color:#289fd2 !important;
+	
+}
+.company_name_bx table.table.table-bordered tr td a {
+    color:#7f7f7f;
+	text-decoration:none;
+	font-size:14px;
+	  font-family: 'SinkinSans-500Medium';
+}
+.main_comp {
+    margin-left: 12px;
+}
+/*=====================
+manage-cupon end
+============================*/
+
+
+/*===================
+get_coupon page start
+=================================*/
+.centers_get_coupon {
+    width: 100%;
+    background: #fff;
+    padding-bottom: 100px;
+}
+.containwers_topp {
+    margin-top: 100px;
+}
+.dollors_tx h2 {
+    font-size: 36px;
+    text-align: center;
+	font-family: 'SinkinSans-300Light';
+}
+.dollors_tx p {
+    text-align: center;
+}
+.dollors_tx {
+    margin-top: 100px;
+}
+p.expired {
+    font-size: 18px;
+	 font-family: 'SinkinSans-400Regular';
+}
+p.provid {
+    font-size: 16px;
+	 font-family: 'SinkinSans-400Regular';
+}p.your_email {
+    font-size: 14px;
+    color: #ccc;
+}
+.submit_login-bx_in{width: 50%;
+    margin: 38px auto;
+}
+.abc{ text-align:center;}
+.centers_get_coupon{ text-align:center;}
+button.btn.btn-default.submitss {
+    background: #ef4923;
+    color: white;
+    width: 187px;
+    height: 47px;
+	font-size:15px;
+    border-radius: 39px;
+	font-family: 'SinkinSans-600SemiBold';
+	
+}
+.gapss{ margin-top:30px;}
+/*===================
+get_coupon page end
+=================================*/
+
+/*=======================
+my_account_pages start
+===================================*/
+.my_account_main {
+    margin-top: 56px;
+}
+
+.name_coupon_1 p {
+    text-align: left;
+}
+.name_coupon_1 p {
+    font-size: 13px;
+    margin: 0;
+    padding-bottom: 2px;
+	color:#989393;
+	  font-family: 'SinkinSans-600SemiBold';
+}
+.name_coupon_1 p:first-child {
+    font-size: 19px;
+    color: #008dca;
+	  font-family: 'SinkinSans-600SemiBold';
+}
+.name_coupon_2 ul.dropdown-menu {
+    margin: 0 0 0 50px;
+}
+.name_coupon_2 button.btn.btn-primary.dropdown-toggle {
+    background: none;
+    color: #ccc;
+    border: 1px solid #ccc;
+    width: 237px;
+    height: 46px;
+    border-radius: 50px;
+	font-family: 'SinkinSans-300Light' !important;
+}
+.one_btn{width: 240px;
+    height: 44px;
+    background: #ef4923;
+    border-radius: 50px;
+	  
+}
+.one_btn p {
+    padding: 10px 0px 0px 24px;
+    text-align: left;
+    color: #fff;
+    font-size: 15px;
+	  font-family: 'SinkinSans-600SemiBold';
+	  text-transform: uppercase;
+}
+.one_btn p span {
+    padding: 0 10px 6px 0px;
+}
+.button_section {
+    margin-top: 46px;
+}
+.one_btn a{ text-decoration:none;}
+.one_btn:hover{ background:#3765a3;}
+.col-md-3.bt1 a {
+    text-decoration: none;
+}
+.boosterap_table {
+    margin-top: 30px;
+}
+
+
+
+.boosterap_table table tr th {
+    background: #289fd2;
+    color: white;
+    text-align: center;
+    padding: 14px;
+	font-size:15px;
+    border: none;
+    text-transform: uppercase;
+	 font-family: 'SinkinSans-500Medium';
+}
+.boosterap_table table tr th:first-child {
+    text-align: left;
+}
+
+.boosterap_table table.table.table-bordered tr td {
+    width: 10%;
+}
+.boosterap_table table.table.table-bordered tr td:first-child {
+    text-align: left;
+	
+}
+.boosterap_table table.table.table-bordered tr td {
+    width: 10%;
+    text-align: center;
+    height: 80px;
+    vertical-align: inherit;
+    padding: 20px;
+    text-decoration: none !important;
+    font-family: 'SinkinSans-400Regular';
+    font-size: 14px;
+	 color:#7f7f7f;
+}
+.boosterap_table table.table.table-bordered tr td a {
+     color:#7f7f7f;
+	text-decoration:none;
+	font-family: 'SinkinSans-500Medium' !important;
+	font-size:14px;
+}
+.boosterap_table table.table.table-bordered tr td a:first-child:hover {
+    color: #289fd2 !important;
+}
+.Redemmed{ margin-top:65px;}
+.Redemmed p {
+    text-align: left;
+    font-size: 19px;
+    color: #289fd2;
+    margin: 0;
+    padding: 0;
+	  font-family: 'SinkinSans-600SemiBold';
+}
+.right_icon{padding: 7px 10px;}
+/*=======================
+my_account_pages start
+===================================*/
+
+
+.active_copn p {
+    text-align: right;
+    color: #3ea2d6;
+	 font-family: 'SinkinSans-300Light';
+	font-size:13px;
+}
+.active_copn {
+    margin-top: 85px;
+}
+.active_setting_bx {
+    width: 100%;
+    background: #289fd2;
+    margin-top: 20px;
+}
+.active_setting_bx p {
+    padding: 12px 0 15px 31px;
+    color: #fff;
+    font-size: 15px;
+	 font-family: 'SinkinSans-500Medium';
+}
+.pd{ padding:0;}
+
+.right_menu_list ul li {
+    display: list-item;
+}
+.right_menu_list ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.right_menu_list {
+    /* margin: 0 auto; */
+    background: #444444;
+    max-width: 255px;
+    margin: 0px 0 0 39px;
+}
+.right_menu_list ul li.my_list {
+    padding: 17px 0px 20px 25px;
+    /* margin: 0; */
+}
+.right_menu_list ul li {
+    display: list-item;
+    padding: 19px 0px 15px 28px;
+    border-bottom: 1px solid;
+	padding-bottom: 31px;
+}
+.right_menu_list ul li a{
+	color:#fff;
+}
+.right_menu_list ul li a span {
+    margin: 0 10px 0px 0;
+}
+.right_menu_section{  margin-top:30px;}
+.all_form{ width:90%; margin:auto;}
+.all_form p {
+    text-align: right;
+}
+button.btn.btn-default.submitss2 {
+    background: #ef4923;
+    color: white;
+    width: 187px;
+    height: 47px;
+    font-size: 15px;
+    border-radius: 39px;
+}
+button.btn.btn-default.brose {
+    width: 163px;
+	color:#919191;
+    /* height: 33px; */
+}
+.col-md-3.bose {
+    padding: 0;
+}
+.business_climer ul li {
+    display: inline-block;
+    padding: 5px 21px 1px 0px;
+    /* padding-left: 30px; */
+}
+.business_climer ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 56%;
+    margin: auto;
+    padding-left: 54px;
+}
+.business_climer ul li a {
+    font-size: 14px;
+    color: #919191;
+    text-decoration: none;
+}
+.business_climer ul li a span {
+    margin: 0 14px 0px 0px;
+}
+my_acc {
+    margin-bottom: 213px;
+}
+.all_form p {
+    font-size: 14px;
+	text-align:left;
+	color: #919191;
+	font-family: 'SinkinSans-400Regular';
+}
+.active_setting_bx p {
+    
+    text-transform: uppercase;
+}
+.right_menu_list ul li.bill {
+    margin: 0;
+    padding: 20px 0 35px 24px;
+}
+.right_menu_list ul li a{ text-decoration:none; font-size:13px;  font-family: 'SinkinSans-300Light';}
+i.fa.fa-user.sz {
+    font-size: 18px;
+}
+.my_acc {
+    margin-bottom: 100px;
+}
+.stc_brd {
+    border: 1px solid #ccc;
+    padding-bottom: 36px;
+}
+
+
+
+
