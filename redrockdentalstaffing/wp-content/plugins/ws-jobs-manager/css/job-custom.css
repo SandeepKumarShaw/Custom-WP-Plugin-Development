@@ -1,0 +1,30 @@
+/** 08-12-2017 **/
+.wp-list-table a.table_download_xls_link {
+    background: #3972aa;
+    color: #fff;
+    padding: 5px 10px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.wp-list-table a.table_download_csv_link{
+    background: #3972aa;
+    color: #fff;
+    padding: 5px 10px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+     margin-bottom: 5px;
+}
+.wp-list-table a.table_download_xls_link:hover, .wp-list-table a.table_download_csv_link:hover{
+    background: #255381;
+}
+.cancel_asign_demo {
+	position: absolute;
+	right: 4px;
+	top: -3px;
+	text-decoration: none;
+	color: red;
+}
+/** End 08-12-2017 **/

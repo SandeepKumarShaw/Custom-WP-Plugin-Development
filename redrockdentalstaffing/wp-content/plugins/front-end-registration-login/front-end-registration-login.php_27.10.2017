@@ -1,0 +1,447 @@
+<?php
+/*
+Plugin Name: Front End User Registration and Login
+Plugin URI: http://example.com/wp-plugins/creating-custom-user-front-end-registration-and-login-forms
+Description: Custom front end user registration and login forms
+Version: 1.0.0
+Author: WP Team
+Author URI: http://example.com/emp/wpteam-390
+*/
+
+// register our form css
+function custom_reg_log_register_css_js() {
+	wp_register_style('custom_reg_log-form-css', plugin_dir_url( __FILE__ ) . 'css/forms.css');
+	wp_enqueue_script('front-end-registration-login', plugin_dir_url(__FILE__) . 'js/front-end-registration-login.js', array('jquery'), NULL, true);
+}
+add_action('init', 'custom_reg_log_register_css_js');
+
+// load our form css
+function custom_reg_log_print_css() {
+	global $custom_reg_log_load_css;
+ 
+	// this variable is set to TRUE if the short code is used on a page/post
+	if ( ! $custom_reg_log_load_css )
+		return; // this means that neither short code is present, so we get out of here
+
+	wp_print_styles('custom_reg_log-form-css');
+}
+add_action('wp_footer', 'custom_reg_log_print_css');
+
+//Create a new user role as your choice
+function add_roles_on_custom_reg_log_plugin_activation() {
+	$capabilities = array(
+		'read' => true, // true allows this capability
+		'edit_posts' => false, // Allows user to edit their own posts
+		'edit_pages' => false, // Allows user to edit pages
+		'edit_others_posts' => false, // Allows user to edit others posts not just their own
+		'create_posts' => false, // Allows user to create new posts
+		'manage_categories' => false, // Allows user to manage post categories
+		'publish_posts' => false, // Allows the user to publish, otherwise posts stays in draft mode
+		'edit_themes' => false, // false denies this capability. User can’t edit your theme
+		'install_plugins' => false, // User cant add new plugins
+		'update_plugin' => false, // User can’t update any plugins
+		'update_core' => false // user cant perform core updates
+	);
+	
+	//remove_role( 'job_seeker' );
+	//remove_role( 'job_provider' );
+	
+	add_role( 'job_seeker', 'Candidates', $capabilities );
+	add_role( 'job_provider', 'Dental Offices', $capabilities );
+	
+	
+	
+    
+}
+register_activation_hook( __FILE__, 'add_roles_on_custom_reg_log_plugin_activation' );
+
+
+
+// To hide admin bar from frontend user (All user type excerpt administrator)
+//if ( ! current_user_can( 'manage_options' ) ) {
+    //show_admin_bar( false );
+//}
+
+//show_admin_bar( false );
+// OR //
+add_filter('show_admin_bar', '__return_false');
+
+
+// user registration form shortcode
+function custom_reg_log_registration_form( $atts ) {
+	
+	$atts = shortcode_atts( array(
+		'regtype' => 'job_seeker' //default job_seeker
+	), $atts, 'register_form' );
+	
+	// only show the registration form to non-logged-in members
+	if(!is_user_logged_in()) {
+	
+		global $custom_reg_log_load_css;
+		
+		// set this to true so the CSS is loaded
+		$custom_reg_log_load_css = true;
+		
+		// check to make sure user registration is enabled
+		$registration_enabled = get_option('users_can_register');
+	
+		// only show the registration form if allowed
+		if($registration_enabled) {
+			if( $atts['regtype'] == 'job_seeker' ) {
+				$output = custom_reg_log_registration_job_seeker_form_fields();
+			}
+			if( $atts['regtype'] == 'job_provider' ) {
+				$output = custom_reg_log_registration_job_provider_form_fields();
+			}
+		} else {
+			$output = __('User registration is not enabled');
+		}
+		return $output;
+	}
+	elseif(is_user_logged_in()) {
+		return custom_reg_log_user_already_logedin();
+	}
+}
+add_shortcode('register_form', 'custom_reg_log_registration_form');
+
+// if user already logedin show a message
+function custom_reg_log_user_already_logedin() {
+	ob_start(); 
+	echo '<h3 class="regmsg">'. _e('<center>You are registered user. No need to fillup registration form again.</center>') .'</h3>';
+	echo do_shortcode('[login_form]');
+	return ob_get_clean();
+}
+
+
+// to include files
+include( plugin_dir_path( __FILE__ ) . 'job-seekers-form.php');
+include( plugin_dir_path( __FILE__ ) . 'job-providers-form.php');
+include( plugin_dir_path( __FILE__ ) . 'new-user-form-submit.php');
+
+
+// user login form shortcode
+function custom_reg_log_login_form() {
+	ob_start();
+	if(!is_user_logged_in()) {
+		
+		global $custom_reg_log_load_css;
+		
+		// set this to true so the CSS is loaded
+		$custom_reg_log_load_css = true;
+		
+		$output = custom_reg_log_login_form_fields();
+	} else {
+		// could show some logged in user info here
+		//$output = 'user info here';
+		//$output = 'You are now registered user.';
+	}
+	echo $output;
+	return ob_get_clean();
+}
+add_shortcode('login_form', 'custom_reg_log_login_form');
+
+// login form fields
+function custom_reg_log_login_form_fields() {
+	ob_start(); ?>
+		<h2 class="custom_reg_log_header"><?php _e('Login'); ?></h2>
+		
+		<?php
+		// show any error messages after form submission
+		custom_reg_log_show_error_messages(); ?>
+		
+		<form id="custom_reg_log_login_form"  class="custom_reg_log_form"action="" method="post">
+			<fieldset>
+				<p>
+					<label for="custom_reg_log_user_Login">Username</label>
+					<input name="custom_reg_log_user_login" id="custom_reg_log_user_login" class="required" type="text"/>
+				</p>
+				<p>
+					<label for="custom_reg_log_user_pass">Password</label>
+					<input name="custom_reg_log_user_pass" id="custom_reg_log_user_pass" class="required" type="password"/>
+				</p>
+				<p>
+					<input type="hidden" name="custom_reg_log_login_nonce" value="<?php echo wp_create_nonce('custom_reg_log-login-nonce'); ?>"/>
+					<input id="custom_reg_log_login_submit" type="submit" value="Login"/>
+				</p>
+			</fieldset>
+		</form>
+	<?php
+	return ob_get_clean();
+}
+
+// logs a member in after submitting a form
+function custom_reg_log_login_member() {
+		
+	if(isset($_POST['custom_reg_log_user_login']) && wp_verify_nonce($_POST['custom_reg_log_login_nonce'], 'custom_reg_log-login-nonce')) {
+				
+		// this returns the user ID and other info from the user name
+		$user = get_userdatabylogin($_POST['custom_reg_log_user_login']);
+		
+		if(!$user) {
+			// if the user name doesn't exist
+			custom_reg_log_errors()->add('empty_username', __('Invalid username'));
+		}
+		
+		if(!isset($_POST['custom_reg_log_user_pass']) || $_POST['custom_reg_log_user_pass'] == '') {
+			// if no password was entered
+			custom_reg_log_errors()->add('empty_password', __('Please enter a password'));
+		}
+				
+		// check the user's login with their password
+		if(!wp_check_password($_POST['custom_reg_log_user_pass'], $user->user_pass, $user->ID)) {
+			// if the password is incorrect for the specified user
+			custom_reg_log_errors()->add('empty_password', __('Incorrect password'));
+		}
+		
+		// retrieve all error messages
+		$errors = custom_reg_log_errors()->get_error_messages();
+		
+		// only log the user in if there are no errors
+		if(empty($errors)) {
+			
+			wp_setcookie($_POST['custom_reg_log_user_login'], $_POST['custom_reg_log_user_pass'], true);
+			wp_set_current_user($user->ID, $_POST['custom_reg_log_user_login']);	
+			do_action('wp_login', $_POST['custom_reg_log_user_login']);
+			
+			// send the newly created user to the current page after logging them in
+			//$redirect_location = get_permalink(); // this would not be worked here
+			$redirect_location = $_SERVER['HTTP_REFERER'];
+			wp_safe_redirect($redirect_location);
+			
+			//wp_redirect(home_url());
+			exit();
+		}
+	}
+}
+add_action('init', 'custom_reg_log_login_member');
+
+// used for tracking error messages
+function custom_reg_log_errors(){
+    static $wp_error; // Will hold global variable safely
+    return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
+}
+
+// displays error messages from form submissions
+function custom_reg_log_show_error_messages() {
+	if($codes = custom_reg_log_errors()->get_error_codes()) {
+		echo '<div class="custom_reg_log_errors">';
+		    // Loop error codes and display errors
+		   foreach($codes as $code){
+		        $message = custom_reg_log_errors()->get_error_message($code);
+		        echo '<span class="error"><strong>' . __('Error') . '</strong>: ' . $message . '</span><br/>';
+		    }
+		echo '</div>';
+	}	
+}
+
+
+// to include files
+include( plugin_dir_path( __FILE__ ) . 'admin-user-edit-form.php');
+
+
+// related user list function
+function custom_user_relation_listing($user_relation_list) {
+	ob_start(); ?>
+		<!--<h2 class="custom_reg_log_header"><?php //_e('Related Users List'); ?></h2>-->
+		<form name="user-list-form" id="" method="post" action="">		
+			<table width="100%" border="0">
+			 <thead>
+			  <tr>
+				 <th>User's Name (Email)</th>
+			  </tr>
+			 </thead>
+			 <tfoot>
+			  <tr>
+				 <th>User's Name (Email)</th>
+			  </tr>
+			 </tfoot>
+			 <tbody>
+				
+			  <tr>
+				 <td>
+					<input type="text" name="user_search_field" id="user_search_field" value="<?php echo $_REQUEST['user_search_field']?$_REQUEST['user_search_field']:'';?>" placeholder="Type username here."> <input type="submit" name="user_search_btn" id="user_search_btn" value="Search User">
+				 </td>
+			  </tr>
+			  
+			  <?php if( !empty($user_relation_list) ) { ?>
+			  <?php foreach($user_relation_list as $single_user) { $user_info = get_userdata($single_user); ?>
+			  <tr class="get_user_details <?php echo 'user_details_'.$single_user; ?>" id="<?php echo 'user_details_'.$single_user; ?>">
+				 <td>
+					
+					<?php
+					//echo get_avatar( $id_or_email, $size, $default, $alt, $args );
+					echo get_avatar( $single_user, 48, $default, $alt, $args );
+					
+					?>
+					
+					<a href="javascript:void(0);" title="" class="view_user_details" id="<?php echo 'view_user_details_'.$single_user; ?>"><?php echo $user_info->data->display_name.' ('.$user_info->data->user_email.')'; ?></a>
+					<ul class="user_details details_<?php echo $single_user; ?>" id="details_<?php echo $single_user; ?>" style="display: none;">
+					<?php
+						$user_details = new WP_User(get_current_user_id());
+						$user_id = $user_details->ID;
+						//echo $user_details->roles[0];
+						//echo '<pre>'; print_r($user_details); echo '</pre>';
+						//echo $user_role;
+						$user_role = $user_details->roles[0];						
+						if($user_role == 'job_provider') {			      
+					?>						
+						<li>
+							<ul>
+								<li><span>First Name:</span> <?php echo get_user_meta($single_user,'first_name',true); ?></li>
+								<li><span>Last Name:</span> <?php echo get_user_meta($single_user,'last_name',true); ?></li>
+								<li><span>Email: </span><?php echo $user_info->data->user_email; ?> <br/><i class="sendmail">[If you want to contact, Please click here to <a href="mailto:<?php echo $user_info->data->user_email; ?>">send a request by email</a>.]</i></li>
+								<li><span>Address: </span><?php echo get_user_meta($single_user,'user_addr',true); ?></li>
+								<li><span>City: </span><?php echo get_user_meta($single_user,'user_city',true); ?></li>
+								<li><span>State: </span><?php echo get_user_meta($single_user,'user_state',true); ?></li>
+								<li><span>Zip Code: </span><?php echo get_user_meta($single_user,'zip_code',true); ?></li>
+								<li><span>Country: </span><?php echo get_user_meta($single_user,'user_country',true); ?></li>
+								<li><span>Max working distance: </span><?php echo get_user_meta($single_user,'max_working_distance',true); ?></li>
+								<li><span>What kind of work are you looking for: </span><?php echo get_user_meta($single_user,'industry',true); ?></li>
+								<li><span>What days are you available?: </span><?php $available = get_user_meta($single_user,'available_days',true); echo implode(", ",unserialize($available)); ?></li>
+							</ul>				
+						</li>						
+					<?php } else { ?>					
+						<li>
+							<ul>
+								<li><span>First Name:</span> <?php echo get_user_meta($single_user,'first_name',true); ?></li>
+								<li><span>Last Name:</span> <?php echo get_user_meta($single_user,'last_name',true); ?></li>
+								<li><span>Email: </span><?php echo $user_info->data->user_email; ?> <br/><i class="sendmail">[If you want to contact, Please click here to <a href="mailto:<?php echo $user_info->data->user_email; ?>">send a request by email</a>.]</i></li>
+								<li><span>Name Of Company/Dental Practice: </span><?php echo get_user_meta($single_user,'company_name',true); ?></li>
+								<li><span>Authorized Contact Person(s): </span><?php echo get_user_meta($single_user,'authorized_contact',true); ?></li>
+								<li><span>Address: </span><?php echo get_user_meta($single_user,'user_addr',true); ?></li>
+								<li><span>City: </span><?php echo get_user_meta($single_user,'user_city',true); ?></li>
+								<li><span>State: </span><?php echo get_user_meta($single_user,'user_state',true); ?></li>
+								<li><span>Zip Code: </span><?php echo get_user_meta($single_user,'zip_code',true); ?></li>
+								<li><span>Office Phone: </span><?php echo get_user_meta($single_user,'office_phone',true); ?></li>
+								<li><span>#Fax: </span><?php echo get_user_meta($single_user,'user_fax',true); ?></li>
+								<li><span>Website: </span><?php echo $user_info->data->user_url; ?></li>
+								<li><span>Type Of Practice/Company: </span><?php echo get_user_meta($single_user,'industry',true); ?></li>				
+							</ul>
+							<ul>
+								<strong>Number of Current Staff: </strong>
+								<li><span>Dentists: </span><?php echo get_user_meta($single_user,'emp_dentists',true); ?></li>
+								<li><span>Hygienists: </span><?php echo get_user_meta($single_user,'emp_hygienists',true); ?></li>
+								<li><span>Assistants:</span> <?php echo get_user_meta($single_user,'emp_assistants',true); ?></li>
+								<li><span>Front Office:</span> <?php echo get_user_meta($single_user,'emp_front_office',true); ?></li>
+								<li><span>Other: </span><?php echo get_user_meta($single_user,'other_stuff',true); ?></li>
+							</ul>      
+							<ul>        
+								<li><span>Computer Software used: </span><?php echo get_user_meta($single_user,'computer_sw',true); ?></li>
+								<li><span>Will you accept a candidate who does not know your software? </span><?php echo get_user_meta($single_user,'exp_with_sw',true); ?></li>
+								<li><span>X-Ray system used:</span> <?php echo get_user_meta($single_user,'x_ray_used',true); ?></li>
+								<li><span>Additional Comments/Information:</span> <?php echo get_user_meta($single_user,'description',true); ?></li>
+							</ul>
+						</li>
+					<?php } ?>
+					</ul>
+				 </td>
+			  </tr>
+			  <?php } ?>
+			  <?php } else { ?>
+				<tr>
+					<td><p>There are no item(s).</p></td>
+				</tr>
+			  <?php } ?>
+			 </tbody>
+			</table>		
+		</form>		
+		<?php
+	return ob_get_clean();
+}
+
+
+// get related user's list
+function custom_get_related_listing() {
+	if( is_user_logged_in() ) {
+		$user_details = new WP_User(get_current_user_id());
+		$user_id = $user_details->ID;
+		//echo '<pre>'; print_r($user_details); echo '</pre>';
+		$user_role = $user_details->roles[0];
+		$user_relation = get_user_meta( $user_id, 'relation_with_users', false);
+		if( !empty($user_relation[0] )) {
+			$user_relation_list = unserialize($user_relation[0]);
+		}
+		//print_r($user_relation_list);
+		$permission = get_user_meta($user_id, 'users_permission');
+		/*
+		global $custom_reg_log_load_css;
+		// set this to true so the CSS is loaded
+		$custom_reg_log_load_css = true;
+		$output = custom_reg_log_login_form_fields();
+		*/
+		if( $permission[0] == 'Enable' ) { //Need admin permission to view user list
+			// You must be carefull for the below section functionality.
+			// If you checked at least one user from admin, then you will see only this selected user at frontend.
+			if ( !empty($user_relation_list) ) {
+				$userlists =  $user_relation_list;
+			} else {
+				$userlists = array();
+				
+				if( $user_role == 'job_seeker' ) {
+					$role__in = 'job_provider';
+				} else {
+					$role__in = 'job_seeker';
+				}
+				
+				$search_str = $_REQUEST['user_search_field']?$_REQUEST['user_search_field']:'';
+	
+				$args = array(
+					'role'         => '',
+					'role__in'     => array($role__in),
+					'role__not_in' => array(),
+					'meta_key'     => '',
+					'meta_value'   => '',
+					'meta_compare' => '',
+					'meta_query'   => array(),
+					'date_query'   => array(),        
+					'include'      => array(),
+					'exclude'      => array(),
+					'orderby'      => 'user_login',
+					'order'        => 'ASC',
+					'offset'       => '',
+					'search'       => '*'.esc_attr( $search_str ).'*',
+					'number'       => -1,
+					'count_total'  => false,
+					'fields'       => 'all',
+					'who'          => '',
+				); 
+				$ourusers = get_users($args);
+				
+				if( count($ourusers)>0 ) {
+				  foreach($ourusers as $user) {
+					$userlists[] = $user->ID;
+				  }
+				} else {
+					$userlists =  NULL;
+				}
+				
+				//global $wpdb;
+				//echo $wpdb->last_query;
+			}
+			$output =  custom_user_relation_listing($userlists);
+		} else {
+			if($_REQUEST['msg'])
+			{
+				$regis_status = 'Thank you. Your registration process successfully completed. <br/>';
+			}
+			else{
+				$regis_status = '';
+			}
+			$output =  '<p class="success">'.$regis_status.'Please wait for administration permission to view users list.</p>';
+		}
+		
+	} else {
+		$output  = '';
+		$output .= '<p>Use the form below to log in!</p>';
+		$output .= custom_reg_log_login_form();
+	}
+	return $output;
+}
+add_shortcode('get_related_listing', 'custom_get_related_listing');
+
+//add_filter('get_avatar', 'change_get_avatar_fun', 1, 5);
+//function change_get_avatar_fun() {
+//	$avatar = '';
+//	return $avatar;
+//}
+?>

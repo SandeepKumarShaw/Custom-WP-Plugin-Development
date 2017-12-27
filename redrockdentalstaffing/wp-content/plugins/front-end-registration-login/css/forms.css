@@ -1,0 +1,238 @@
+.custom_reg_log_form label { display: block; width: 35%; float: left; }
+.custom_reg_log_form input[type="text"], .custom_reg_log_form input[type="password"],
+.custom_reg_log_form input[type="email"] {padding: 4px 8px;background: #f0f0f0;border: 1px solid #ccc;width: 50%;}
+.custom_reg_log_form input[type="text"]:focus, .custom_reg_log_form input[type="password"]:focus,
+.custom_reg_log_form input[type="email"]:focus {border-color: #aaa;}
+.custom_reg_log_form input[type="text"]{width: 63%;}
+.custom_reg_log_errors { padding: 8px; border: 1px solid #f50; margin: 0 0 15px;}
+.bannerSecNull {border: 1px solid #d7d7d7;margin-bottom: 70px;margin-top: 22px;}
+.search-sec .text_box_search input[type="text"],.search-sec .text_box_search input[type="number"] {display: inline-block;width: 23.6%;margin-right: 14px;height: inherit;border: 1px solid rgba(0,0,0,0.1);padding: 15px 20px 15px 40px;font-size: 14px;margin-bottom: 0;background: url(../images/map.png) no-repeat 10px center, #fff;}
+.search-sec .text_box_search input:nth-child(4n), .text_box_search input[type="number"]{margin-right: 0;}
+
+.custom_radio p {font-weight: bold;}
+.custom_radio{margin-bottom: 20px;}
+.custom_radio input , .checkbox-wrap span input{margin-right: 5px;vertical-align: middle;margin-bottom: 0;}
+.custom_radio span {display: inline-block;margin-right: 9px;}
+.get_user_details {float:left; width: 23.9%;background: #ededed;padding: 20px;text-align: center;margin: 0 16px 20px 0;}
+.all-items .get_user_details:nth-child(4n) {margin-right: 0;}
+.get_user_details ul li:nth-child(2) {margin-top: 17px;}
+.get_user_details ul li:last-child a, .click_to_view_details{border: none;background-color: #bbddf6 !important;text-align: center;padding: 10px 12px;font-size: 12px;color: #393939;font-family: 'Montserrat', sans-serif;text-transform: uppercase;font-weight: 600;transition: 0.5s;-webkit-transition: 0.5s;-moz-transition: 0.5s;-ms-transition: 0.5s;-webkit-appearance: none;display: inline-block;margin-top: 15px;}
+.get_user_details ul li:last-child a:hover{background-color: #393939 !important;color: #fff;}
+.get_user_details ul li img{width: 100%;}
+.get_user_details ul{margin: 0 !important;}
+.get_user_details ul li:nth-child(2) {margin-top: 17px;font-weight: bold;font-size: 18px;}
+
+.details-pg { width: 20%; }
+.details-pg .get_user_details { width: 100%; }
+
+
+.staff-user-list {margin-bottom: 60px;}   
+
+.seekers_details, .seekers_details ul {padding: 0;margin: 0 0 40px;border: 1px solid #f2f2f2;}
+.seekers_details{border:none;}
+.seekers_details ul span:first-child{font-weight: 600;text-transform: uppercase;border-right: 1px solid #dfdfdf;}
+.seekers_details ul span {width: 45%;font-size: 13px;line-height: 1.5;color: #393939;margin: 0;text-align: left;display: inline-block;vertical-align: middle;margin-right: 10px;}
+.seekers_details ul li {padding: 5px 10px;border-bottom: 1px solid #f2f2f2;}
+.seekers_details ul li:last-child{border-bottom: none;}
+.seekers_details ul li:nth-child(2n+1){background: #f3f3f3;}
+.listing_staff {font-size: 20px;padding: 10px 9px 0;margin: 0;font-weight: 600;}
+.click_to_view_details {background: #000 !important;color: #fff;padding: 12px 12px;font-size: 12px;line-height: 1;}
+.u_list {display: inline-block;width: 47%;vertical-align: middle;}
+.click_to_view_details:hover, .click_to_view_details:focus{background:#bbddf6 !important;color: #000;}
+.signinuser_credential {position: relative;}
+.user_other_infos {position: absolute;top: 70%;text-align: right;right: 0;background: #fff;padding: 10px;box-shadow: rgba(0,0,0,0.5) 0 0 1px 0px;-webkit-box-shadow: rgba(0,0,0,0.5) 0 0 1px 0px;min-width: 300px;margin-top: 15px;z-index: 9;}
+.user_other_infos p {background: #f2f2f2;padding: 8px 10px;margin: 0 0 2px;font-size: 16px;}
+.user_other_infos:before {border-bottom: 10px solid #f2f2f2;border-left: 10px solid transparent;border-right: 10px solid transparent;content: "";width: 0;height: 0;position: absolute;top: -10px;right: 18px;}
+.custom_radio span em, .checkbox-wrap span em {display: inline-block;vertical-align: middle;font-style: normal;}
+.custom_check {margin-bottom: 25px;}
+.seekers_details .sendmail {font-size: 14px;}
+.login_page,.login_page h2 {text-align: center;}
+.login_page .staff-user-list #custom_reg_log_login_form{background: #bbddf6;}
+.login_page .staff-user-list #custom_reg_log_login_form p input{background: #fff !important;}
+.login_page .staff-user-list #custom_reg_log_login_form p input[type="submit"]#custom_reg_log_login_submit{background: #000 !important; color: #fff;}
+
+.login_page .custom_reg_log_errors {width: 60%;margin: 0 auto 20px;}
+.pagination .current{background: #bbddf6 !important;}
+.pagination{text-align: center !important; float: none !important;}
+.pagination span, .pagination a, .pagination .current{display: inline-block !important; float: none !important;padding: 8px 14px 9px 14px !important;}
+.pagination{text-align: center !important;}
+.job-listing-hld {text-align: center;margin-bottom: 50px;}
+.job-listing-hld {text-align: center;margin-bottom: 50px;border: 1px solid #ddd;padding: 20px;background: #f2f2f2;max-width: 100%;margin: 0 auto 50px;}
+.search-sec {border: 1px solid #c5c5c5;padding: 11px;margin-bottom: 40px; background: #ebebeb;}
+.custom-btton{border: none;background-color: #bbddf6 !important;text-align: center;font-size: 21px;color: #393939;font-family: 'Montserrat', sans-serif;text-transform: uppercase;font-weight: 600;padding: 10px 30px;transition: 0.5s;-webkit-transition: 0.5s;-moz-transition: 0.5s;-ms-transition: 0.5s;-webkit-appearance: none;}
+.custom-btton:hover{background-color: #393939 !important;color: #fff;}
+.edlbtn {margin-bottom: 25px;}
+.aply_edit.edlbtn a {display: inline-block;}
+.text_box_search-1 input[type="text"] {width: 100%;}
+#ui-datepicker-div {display: none;}
+span.required{color: red;}
+.custom_reg_log_form input[type="password"], .custom_reg_log_form input[type="email"]{width: 63%;}
+.details-pg {vertical-align: top;}
+.text_box_search {background: #ddd;margin: 0 0 20px;padding: 10px;}
+
+#seeker_search_job_title{background: url(../images/business.png) no-repeat 10px center, #fff; margin-bottom: 10px;}
+#seeker_search_salary{background: url(../images/salary.png) no-repeat 10px center, #fff;}
+#user_search_zip{background: url(../images/zip.png) no-repeat 10px center, #fff;}
+#city_search_field{background: url(../images/city.png) no-repeat 10px center, #fff;}
+#max_distance_search_field{background: url(../images/distance.png) no-repeat 10px center, #fff;}
+
+.custom_check.advance_search > p {font-weight: 600;}
+.all-items {overflow: hidden;border: 1px solid #ebebeb;padding: 20px;}
+.cbthldr {margin-top: 15px;}
+
+.apply_job_item .job-title{color: #393939;padding: 10px;border:1px solid #ccc;}
+.apply_job_item .job-title .listing_staff{margin-top: 0;padding: 0; position: relative;}
+.job-title .listing_staff:after {content: "";position: absolute;border-left: 2px solid #393939;border-bottom: 2px solid #393939;width: 12px;height: 12px;right: 15px;transform: rotate(-45deg);-webkit-transform: rotate(-45deg);top: 3px;margin: auto;}
+.apply_job_item.active .job-title .listing_staff:after {content: "";position: absolute;border-left: none;border-bottom: none; border-right: 2px solid #393939;border-top: 2px solid #393939;width: 12px;height: 12px;right: 15px;transform: rotate(-45deg);-webkit-transform: rotate(-45deg);top: 10px;margin: auto;}
+.item-dtls.seekers_details {-webkit-transition: all 0.5s ease;transition: all 0.5s ease;margin-bottom: 0;margin-bottom: 15px;}
+.item-dtls.seekers_details ul{margin-bottom: 0;}
+.aply_edit.edlbtn {margin-top: 15px;}
+.apply_to_job li {margin-bottom: 20px;-webkit-transition: all 0.5s ease;transition: all 0.5s ease;}
+.apply_job_item .job-title:hover{cursor: pointer;}
+.seekers_details ul li{margin-bottom: 0;}
+.aply_edit.edlbtn .custom-btton{font-size: 16px;text-transform: capitalize;}
+
+.apply_to_job li.active .job-title {border-bottom: none;}
+.custom_reg_log_form.edit input[type="file"] {vertical-align: top;}
+.upload p {margin-bottom: 48px;}
+.mar-btm {margin-bottom: 24px;display: inline-block;}
+.frm-head {font-weight: bold;margin: 20px 0;font-size: 24px;padding-left: 10px;}
+.clear{clear: both;}
+.edit-my-profile p:first-child {float: left;width: 30%;}
+.edit-my-profile p:last-child {float: right;margin-top: 31px;width: auto;}
+a.forgot_pasword {color: #393939;}
+a.forgot_pasword:hover, a:active{color: white;}
+.fp-flds div {display: inline-block;vertical-align: top;}
+.fp-input-txt {width: 39%;margin-right: 7px;}
+.fp-input-txt input {width: 100% !important;}
+.fp-flds.custom_reg_log_form {margin-bottom: 60px;}
+.fp-label {padding-top: 12px;}
+#custom_job_post_descrip {width: 63%;resize: vertical;}
+.click_butn {display: none;width: 100%;padding: 10px;margin: 15px 0;border: 1px solid #04d704;position: relative;font-size: 16px;color: #06a406; background: url(../images/success.png) no-repeat 10px center; padding-left: 45px;background-size: 25px;}
+.forgot_psswrd {background: #bbddf6;padding: 20px;margin: 15px auto 30px;width: 60%;}
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-label{display: block;width: 12%;float: left;padding-top: 13px;}
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-input-txt{width: 64%;float: left;margin: 0;}
+.forgot_psswrd .custom_reg_log_form input[type="password"],
+.forgot_psswrd .custom_reg_log_form input[type="email"]{background: #fff !important;}
+.forgot_psswrd .custom_reg_log_form input[type="submit"]{background: #000 !important; color: #fff;}
+.forgot_psswrd .fp-input-submit {margin-left:0;float: left;}
+.forgot_psswrd .fp-flds.custom_reg_log_form {margin-bottom: 0;}
+.newpass{width: 49%; float: left;}
+.confnewpass{width: 49%; float: right;}
+.custom_reg_log_form .newpass label, .custom_reg_log_form .confnewpass label{width: auto; }
+
+.custom_reg_log_form .newpass input, .custom_reg_log_form .confnewpass input{width: 100%;}
+
+/*******10-11-2017****/
+.job-listing-hld.test p {
+    margin-bottom: 0;
+}
+/*******10-11-2017****/
+
+/****22-11-2017***/
+.a_post_title {
+    display: block;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+ul.back_asgn_to li {
+    border-bottom: 1px solid #c5c5c5;
+    padding-bottom: 11px;
+}
+
+.back_asgn_to li:last-child { border: none; }
+/****22-11-2017***/
+
+/*24-11-17*/
+.red_cross {position: relative;padding: 15px 20px 15px 40px;font-size: 13px;color: #ffcfcf;background: #db4d4d;border-radius: 4px;margin: 0;display: inline-block;font-weight: 400;margin-bottom: 1rem;}
+.red_cross:before{content: ""; left:10px; position: absolute; top: 0; bottom: 0; margin:auto; width: 25px; height: 25px; display: inline-block; vertical-align: middle; background: url(../images/cross-new.png) no-repeat;}
+.red_cross a {color: #fff;}
+.not_updated {display: inline-block;padding: 15px 20px;border-radius: 4px;-webkit-border-radius: 4px;margin-bottom: 1rem;background: #009cff;color: #e6f3fb; font-size: 13px;}
+.green_check {padding: 15px 20px 15px 45px;margin: 0 1rem 1rem 0;display: inline-block;background: #239d60;border-radius: 4px;-webkit-border-radius: 4px;font-size: 13px;color: #fff;position: relative;}
+.green_check:before{content: ""; left:10px; position: absolute; top: 0; bottom: 0; margin:auto; width: 25px; height: 23px; display: inline-block; vertical-align: middle; background: url(../images/tick-mark.png) no-repeat;}
+.not_updated a {font-size: 15px;color: #fff;}
+.not_updated a .fa.fa-file-pdf-o {margin-right: 8px;}
+
+#accordion .ui-state-default {background: #e6e6e6;margin-top: 15px;}
+#accordion .ui-corner-bottom{margin-bottom: 15px;height: auto !important;}
+.dwnld_wrap {display: block;padding: 15px;border: 1px solid #ccc;margin-bottom: 15px;clear: right;border-radius: 4px;-webkit-border-radius: 4px;}
+.dwnld_wrap input {height: inherit;}
+.dwnld_wrap input[type="file"] {height: inherit;width: 100% !important;margin-bottom: 0;}
+.dwnld_wrap p {margin-bottom: 0;}
+.d_wrap {margin-bottom: 2rem;}
+
+
+/*-----011217------*/
+.seekers_form_wrap input[type=text], .seekers_form_wrap select {
+    width: 17%;
+    height: 44px;
+    padding-left: 7px;
+    margin-bottom: 10px;
+    margin-right: 9px;
+}
+.seekers_form_wrap #search_seeker_button {
+    background: #00b9eb;
+    border: none;
+    color: #fff;
+}
+.seekers_form_wrap #search_seeker_button:hover{
+    background: #000;
+}
+.seekers_form_wrap .checkbox-wrap span input {
+    margin-right: 5px;
+    vertical-align: -3px;
+}
+.seekers_form_wrap #u_s_available span {
+    margin-right: 13px;
+}
+.seekers_form_wrap {
+    background: #e2e2e2;
+    padding: 20px;
+    margin-bottom: 22px;
+}
+/*-----011217------*/
+/*5-12-2017*/
+.xray_type{
+margin-top: 5px;
+}
+
+
+
+
+
+@media(max-width:1199px){
+    .forgot_psswrd .fp-flds.custom_reg_log_form .fp-label{width: 15%;}
+    .forgot_psswrd .fp-flds.custom_reg_log_form .fp-input-txt{width: 56%;}
+}
+
+@media(max-width:1023px){
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-label label{width: auto; margin: 0 0 10px;}
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-label{width: 100%; padding-top: 0;}
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-input-txt{width: 60%;}
+.newpass{width: 100%; float: none;}
+.confnewpass{width: 100%; float: none;}
+.custom_reg_log_form .newpass label, .custom_reg_log_form .confnewpass label{text-align: left;}
+}
+
+@media(max-width:782px){
+ /*-----011217------*/
+ .seekers_form_wrap .checkbox-wrap span input {
+    margin-right: 5px;
+    vertical-align: -8px;
+}
+.seekers_form_wrap input[type="text"], .seekers_form_wrap select{
+    width: 100%;
+}
+ /*-----011217------*/
+    
+}
+
+@media(max-width:767px){
+.banner img {
+    height: 152px;
+}
+.forgot_psswrd{width: 100%;}
+.forgot_psswrd .fp-flds.custom_reg_log_form .fp-input-txt{width: 100%;}
+.forgot_psswrd .fp-input-submit, .forgot_psswrd .custom_reg_log_form input[type="submit"]{width: 100%; float: none;}
+}

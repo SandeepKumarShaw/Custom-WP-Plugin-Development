@@ -1,0 +1,954 @@
+<?php
+//User access control page
+
+///////////////////////////////////=====================///////////////////////////////////////
+// WP_List_Table is not loaded automatically so we need to load it in our application
+if( ! class_exists( 'WP_List_Table' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+}
+
+/**
+ * Create a new table class that will extend the WP_List_Table
+ */
+class CustomCreate_List_Table extends WP_List_Table
+{
+	
+	/**
+     * Prepare the items for the table to process
+     *
+     * @return Void
+     */
+    public function prepare_items()
+    {
+	// [OPTIONAL] process bulk action if any
+        $this->process_bulk_action(); // Delete the data by bulk or single
+
+        $columns = $this->get_columns();
+        $hidden = $this->get_hidden_columns();
+        $sortable = $this->get_sortable_columns();
+        $data = $this->table_data();
+        //usort( $data, array( &$this, 'sort_data' ) );
+        $perPage = 20;
+        $currentPage = $this->get_pagenum();
+        $totalItems = count($data);
+        $this->set_pagination_args( array(
+            'total_items' => $totalItems,
+            'per_page'    => $perPage
+        ) );
+        $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
+        $this->_column_headers = array($columns, $hidden, $sortable);
+        $this->items = $data;
+    }	
+	
+    /**
+     * Override the parent columns method. Defines the columns to use in your listing table
+     *
+     * @return Array
+     */
+    public function get_columns()
+    {
+       	$user_role= $_REQUEST['user_role'];
+	if( $user_role == 'job_provider' ) {
+	    $columns = array(
+		'cb'               => '<input type="checkbox" />',
+		//'id'             => 'ID',
+		'title'            => 'Name',
+		'email' 	   => 'Email',
+		'role'             => 'Role',
+		'hired_candidates' => 'Contact Requested',
+		//'relation'       => 'Relation With',
+		//'access'         => 'Connect Users',
+		'permission'       => 'Permission'
+	    );
+	} else {
+	    $columns = array(
+		'cb'                 => '<input type="checkbox" />',
+		//'id'               => 'ID',
+		'title'              => 'Name',
+		'email' 	     => 'Email',
+		'role'               => 'Role',
+		'assignedto'	     => 'Assigned To',
+		//'hired_candidates' => 'Hired Candidates',
+		//'relation'         => 'Relation With',
+		//'access'           => 'Connect Users',
+		'permission'         => 'Permission'
+	    );
+	}
+        return $columns;
+    }	
+	
+    /**
+     * Define which columns are hidden
+     *
+     * @return Array
+     */
+    public function get_hidden_columns()
+    {
+        return array();
+    }
+    /**
+     * Define the sortable columns
+     *
+     * @return Array
+     */
+    public function get_sortable_columns()
+    {
+		$sort_column = 	array(
+		    'title' => array('title', false),
+		    'role' => array('role', false)
+		);
+        return $sort_column;
+    }
+	
+	
+	// For additional filter fields like user role search
+	protected function extra_tablenav( $which ) {
+		if ( $which == "top" ) {
+		?>
+		<div class="alignleft actions">
+			<label class="screen-reader-text" for="<?php echo $id ?>"><?php _e( 'Change role' ) ?></label>
+			<select name="user_role" id="user_role">
+				<option value=""><?php _e( 'Change role' ) ?></option>
+				<?php wp_dropdown_roles(); ?>
+			</select>
+			<?php submit_button( __( 'Change' ), '', 'change_user_role', false ); ?>
+		</div>
+		<?php
+		}
+		if ( $which == "bottom" ) {
+			//The code that goes after the table is there
+		}
+	}
+	
+	
+    /**
+     * Get the table data
+     *
+     * @return Array
+     */
+    private function table_data() {
+		$search_str = $_REQUEST['s']?$_REQUEST['s']:'';
+		$role_str 	= $_REQUEST['user_role']?$_REQUEST['user_role']:'';
+		//$u_search_zip = $_REQUEST['u_search_zip']?$_REQUEST['u_search_zip']:'';
+		
+		/***********For Zip START*********/
+		if($_REQUEST['u_search_zip']){
+		    $u_search_zip[] = array(
+			    'key' => 'zip_code',
+			    'value' => $_REQUEST['u_search_zip'],
+			    'compare' => '='
+		    );
+		}
+		else{
+			$u_search_zip = array();
+		}
+		/***********For Zip End*********/
+		
+		
+		
+		/***********For City START*********/
+		if($_REQUEST['u_search_city']){
+			$u_search_city[] = array(
+					'key' => 'user_city',
+					'value' => $_REQUEST['u_search_city'],
+					'compare' => 'LIKE'
+				);
+		}
+		else{
+			$u_search_city = array();
+		}
+		/***********For City END*********/
+		
+		/***********For State START*********/
+		if($_REQUEST['u_search_state']){
+			$u_search_state[] = array(
+					'key' => 'user_state',
+					'value' => $_REQUEST['u_search_state'],
+					'compare' => 'LIKE'
+				);
+		}
+		else{
+			$u_search_state = array();
+		}
+		/***********For State END*********/
+		
+		
+		
+		/***********For Experience START*********/
+		if($_REQUEST['u_search_experi']){
+			$u_search_experi[] = array(
+					'key' => 'user_experience',
+					'value' => $_REQUEST['u_search_experi'],
+					'compare' => 'LIKE',
+					'orderby' => 'user_experience',
+					'order' => DESC
+				);
+		}
+		else{
+			$u_search_experi = array();
+		}
+		/***********For Experience END*********/
+		
+		
+		
+		/***********For Candidate Rating START*********/
+		if($_REQUEST['u_search_rating']){
+			$u_search_rating[] = array(
+					'key' => 'candi_star_rating',
+					'value' => $_REQUEST['u_search_rating'],
+					'compare' => '='
+				);
+		}
+		else{
+			$u_search_rating = array();
+		}
+		/***********For Candidate Rating END*********/
+		
+		
+		
+		
+		/***********For Years Months START*********/
+		
+		if(isset($_REQUEST['u_search_years']) ){
+			$user_experience_years = $_REQUEST["u_search_years"];
+		}
+		if(isset($_REQUEST["u_search_months"]) ){
+			$user_experience_months = $_REQUEST["u_search_months"];
+		}
+		if($user_experience_years){
+			$user_exp_in_month = $user_experience_years*12;
+			if($user_experience_months){
+				$user_exp_in_month = $user_exp_in_month+$user_experience_months;
+			}
+			$user_experience = $user_exp_in_month;
+		}else{
+			$user_experience = $user_experience_months;
+		}	
+		
+		if($user_experience){
+			$u_search_experi[] = array(
+					'key' => 'user_experience',
+					'value' => $user_experience,
+					'compare' => '='
+				);
+		}
+		else{
+			$u_search_experi = array();
+		}
+		/***********For Years Months END*********/
+		
+		
+		
+		
+		
+		/***********For Practice Type Search START*********/
+		if( $_REQUEST['u_search_practice_type']=='Any Kind' ){
+			$u_search_practice_type = array();
+		}
+		else if( $_REQUEST['u_search_practice_type']!='') {
+			$u_search_practice_type[] = array(
+					'key' => 'industry',
+					'value' => $_REQUEST['u_search_practice_type'],
+					'compare' => '='
+			);
+		}
+		else{
+			$u_search_practice_type= array();
+		}
+		/***********For  Practice Type Search END*********/
+		
+		
+		
+		/***********For Available Days START*********/
+		$u_search_available = $_REQUEST['u_search_available'][0];
+		
+		$u_search_available = explode(",",$u_search_available);
+    
+		$u_search_available_array[] = $u_search_available;
+		
+		/*if($_REQUEST['available_search_field']){
+			$available_search_field[] = array(
+					'key' => 'available_days',
+					'value' => '%'.serialize($_REQUEST['available_search_field']).'%',
+					'compare' => 'LIKE'
+				);
+		}
+		else{
+			$available_search_field = array();
+		}*/
+		
+		$u_search_available_array_new = $u_search_available_array[0];
+	    
+		/***********For  Available Days END*********/
+				
+        $data = array();
+		
+		$args = array(
+			'role'         => $role_str,
+			'role__in'     => array('job_seeker', 'job_provider'),
+			'role__not_in' => array(),
+			//'orderby' => 'meta_value',
+			//'meta_key' => 'user_experience',
+			//'order'        => 'DESC',
+			'meta_query' => array(
+				//'relation' => 'OR', //**** Use AND or OR as per your required Where Clause
+				$u_search_zip,
+				//$max_distance_search_field,
+				$u_search_practice_type,
+				//$u_search_available_array_new,						
+				$u_search_city,
+				$u_search_state,
+				$u_search_experi,				
+				$u_search_rating		
+			),
+		    		
+			'date_query'   => array(),        
+			'include'      => array(),
+			'exclude'      => array(1),
+			
+			'offset'       => '',
+			'search'       => $search_str,
+			'number'       => -1,
+			'count_total'  => false,
+			'fields'       => 'all',
+			'who'          => '',
+		 ); 
+		 //$subscribers = get_users($args);
+		 $user_query = new WP_User_Query( $args );
+
+
+
+// print_r($subscribers);
+		//global $wpdb;
+		//echo $wpdb->last_query;
+		
+		
+		
+		/*
+		 foreach ($subscribers as $user) {
+		    $available_days_array = array();
+		    if($u_search_available_array_new[0]){
+			
+			    $available_days_array = unserialize(get_user_meta($user->ID,'available_days', true));
+			
+			    foreach($u_search_available_array_new as $single_avl_search){
+			      if (in_array($single_avl_search, $available_days_array)){
+				    $userlists[] = $user->ID;
+				     
+			      }
+			    }
+			   
+		    }else{		
+			    $userlists[] = $user->ID;
+			   
+		    }
+		
+		 }
+		 */
+		
+		
+		
+		if ( ! empty( $user_query->results ) ) {
+		    //foreach ($subscribers as $user) {
+		    foreach ( $user_query->results as $user ) { //print_r($user->ID);
+			$available_days_array = array();
+			if($u_search_available_array_new[0]){
+			    
+				$available_days_array = unserialize(get_user_meta($user->ID,'available_days', true));
+			    
+				foreach($u_search_available_array_new as $single_avl_search){
+				  if (in_array($single_avl_search, $available_days_array)){
+					$userlists[] = $user->ID;
+					 
+				  }
+				}
+			       
+			}else{		
+				$userlists[] = $user->ID;
+			       
+			}
+		    
+		    }
+		} 
+		 
+		 
+		 $userlists = array_unique($userlists);
+		 
+		 $userlists_count = count($userlists);
+		 
+		
+		 
+		for ($c = 0 ; $c < ( $userlists_count - 1 ); $c++)
+		{
+		    for ($d = 0 ; $d < $userlists_count - $c - 1; $d++)
+		    {
+			$first_id = $userlists[$d];
+			$first_user_experience = get_user_meta($first_id,'user_experience',true);
+			
+			$second_id = $userlists[$d+1];
+			$second_user_experience = get_user_meta($second_id,'user_experience',true);
+			
+			if ($first_user_experience < $second_user_experience) //For decreasing order use < 
+			{
+			    $swap       = $userlists[$d];
+			    $userlists[$d]   = $userlists[$d+1];
+			    $userlists[$d+1] = $swap;
+			}
+		    }
+		}
+		
+		//print_r($userlists);
+		 
+		 foreach($userlists as $s_user){
+		    $s_user_data = get_userdata( $s_user );
+			$data[] =  array(
+				'id'          => $s_user_data->id,
+				'title'       => $s_user_data->user_nicename,
+				'email' 	=> $s_user_data->user_email,
+				'role'        => $s_user_data->roles[0],
+				//'relation'    => 'User-1, User-2',
+				//'access'      => sprintf('<a href="?page='.$_REQUEST['page'].'&id=%s">%s</a>', $user->id, __('Specify Users to Connect', 'edit_user_assess'))
+			);
+		}
+
+        return $data;
+    }
+	
+	//Display bulk action 
+	function get_bulk_actions() {
+		$actions = array(
+			'delete'    => 'Delete'
+		);
+		return $actions;
+	}
+	
+	/**
+	 * [OPTIONAL] This method processes bulk actions
+	 * it can be outside of class
+	 * it can not use wp_redirect coz there is output already
+	 * in this example we are processing delete action
+	 * message about successful deletion will be shown on page in next part
+	 */
+	function process_bulk_action() {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'users'; // do not forget about tables prefix
+		
+		if ('delete' === $this->current_action()) {
+			$ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
+			if (is_array($ids)) $ids = implode(',', $ids);
+			
+			if (!empty($ids)) {
+				$wpdb->query("DELETE FROM $table_name WHERE ID IN($ids)");
+			}
+		}
+		//echo $wpdb->last_query;
+		//exit;
+	}
+	
+	
+	
+    /**
+     * Define what data to show on each column of the table
+     *
+     * @param  Array $item        Data
+     * @param  String $column_name - Current column name
+     *
+     * @return Mixed
+     */
+    public function column_default( $item, $column_name )
+    {
+        switch( $column_name ) {
+            //case 'id':
+            case 'title':
+            case 'email':
+            case 'role':
+            case 'assignedto':
+            case 'relation':
+            case 'permission':
+            case 'access':
+                return $item[ $column_name ];
+            default:
+                return print_r( $item, true ) ;
+        }
+    }
+	
+	function column_cb($item) {
+		return sprintf(
+			'<input type="checkbox" name="id[]" value="%s" />',
+			$item['id']
+		);
+	}
+	
+	function column_title($item) {
+		//user-edit.php?user_id=3&wp_http_referer=%2Fstaffing-agency%2Fwp-admin%2Fusers.php
+		$actions = array(
+			'edit' => sprintf('<a href="user-edit.php?user_id=%s">%s</a>', $item['id'], __('Edit', 'edit_user_assess')),
+			'delete' => sprintf('<a href="?page=%s&action=delete&id=%s">%s</a>', $_REQUEST['page'], $item['id'], __('Delete', 'custom_table_example')),
+		);
+
+		return    sprintf('%1$s %2$s', $item['title'], $this->row_actions($actions) );
+	}
+	
+	function column_role($item) {
+		$data = '';
+		
+		if ( $item['role'] == 'job_seeker' ) { $data = 'Candidates'; }
+		if ( $item['role'] == 'job_provider' ) { $data = 'Employer'; }
+
+		return $data;
+	}
+	
+	
+	function column_hired_candidates($item) {
+	    $connected_users=get_user_meta($item['id'], 'interest_on_candidate');
+	    //print_r($connected_users);
+	    $username = array();
+	    if( !empty($connected_users[0] )) {
+		    $user_ids_arr=explode(',', $connected_users[0]);
+		    if( !empty($user_ids_arr) ) {
+			    foreach($user_ids_arr as $userid) {
+				    //echo $userid.'\n';
+				    $user_info = get_userdata($userid);
+				    //$username[] = $user_info->user_login;
+				    $username[] = '<a href="users.php?s='.$userid.'" title="">'.$user_info->user_login.'</a>';
+				    
+				    
+			    }
+			    $data = implode(", ",$username);
+		    }
+	    }
+	    return $data;
+	}	
+	
+	
+	function column_assignedto($item) {
+	    $asgned_to_user_id = $item['id'];
+	    $assigned_user_id = get_user_meta( $asgned_to_user_id, 'asgnd_to_job', false );
+	    if($assigned_user_id){
+		$assigned_user_id_array = explode(",",$assigned_user_id[0]);
+	    }
+	    else{
+		$assigned_user_id_array = '';
+	    }
+	    if($assigned_user_id_array){	    
+		foreach($assigned_user_id_array as $single_assigned_user_id){
+		   $j_title = get_the_title($single_assigned_user_id);
+		  //return $j_title;
+		}
+	    }
+		return $j_title;
+	}
+	
+	function column_relation($item) {
+		$connected_users=get_user_meta($item['id'], 'relation_with_users');
+		//print_r($connected_users);
+		$username = array();
+		if( !empty($connected_users[0] )) {
+			$user_ids_arr=unserialize($connected_users[0]);
+			if( !empty($user_ids_arr) ) {
+				foreach($user_ids_arr as $userid) {
+					//echo $userid.'\n';
+					$user_info = get_userdata($userid);
+					$username[] = $user_info->user_login;
+				}
+				$data = implode(", ",$username);
+			}
+		}
+		return $data;
+	}
+	
+	function column_permission($item) {
+		$get_permission = get_user_meta($item['id'], 'users_permission');
+		//print_r($get_permission);
+		
+		if( $get_permission[0] == 'Enable' ) {
+			
+			$permission = sprintf('<a href="?page='.$_REQUEST['page'].'&id=%s">%s</a>', $item['id'], __('Edit to Disable', 'edit_user_assess'));
+		} else {
+			$permission = sprintf('<a href="?page='.$_REQUEST['page'].'&id=%s">%s</a>', $item['id'], __('Edit to Enable', 'edit_user_assess'));
+		}
+		
+		return $permission;
+	}
+	
+	
+	
+    /**
+     * Allows you to sort the data by the variables set in the $_GET
+     *
+     * @return Mixed
+     */
+    private function sort_data( $a, $b )
+    {
+        // Set defaults
+        $orderby = 'title';
+        $order = 'asc';
+        // If orderby is set, use this as the sort column
+        if(!empty($_GET['orderby']))
+        {
+            $orderby = $_GET['orderby'];
+        }
+        // If order is set use this as the order
+        if(!empty($_GET['order']))
+        {
+            $order = $_GET['order'];
+        }
+        $result = strcmp( $a[$orderby], $b[$orderby] );
+        if($order === 'asc')
+        {
+            return $result;
+        }
+        return -$result;
+    }	
+	
+}
+
+
+
+//Add sub menu page to the Users or Profile menu.
+add_action('admin_menu', 'custom_submenu_under_users_menu');
+
+function custom_submenu_under_users_menu() {
+	if ( current_user_can( 'manage_options' ) )  {
+		//add_users_page( $page_title, $menu_title, $capability, $menu_slug, $function);
+		add_users_page('User Access List', 'User Access', 'read', 'user-access-list', 'user_access_list_function');
+		add_users_page('Candidates', 'Candidates', 'read', 'user-access-list&user_role=job_seeker', 'user_access_list_function');
+		add_users_page('Employer', 'Employer', 'read', 'user-access-list&user_role=job_provider', 'user_access_list_function');
+		add_users_page('User Settings', 'User Settings', 'read', 'user-settings', 'user_settings_function');
+	}
+}
+
+function user_access_list_function() {
+	//print_r($_REQUEST);
+	//die("HI");
+	$page = $_REQUEST['page'];
+	$id   = $_REQUEST['id'];
+	echo $u_role = $_REQUEST['user_role'];
+	
+	if($u_role == 'job_seeker'){
+	   ?>
+	   <script>
+	    jQuery(document).ready(function(){
+		jQuery( "#menu-users .wp-submenu li" ).each(function() {
+		    var li_text = jQuery( this ).text();
+		    //alert(li_text);
+		    if (li_text == 'User Access') {
+			if (jQuery(this).hasClass("current")) {
+			    //code
+			    jQuery(this).removeClass("current");
+			    jQuery(this).find("a").removeClass("current");
+			}
+		    }
+		    
+		     if (li_text == 'Candidates') {			
+			    //code
+			    jQuery(this).addClass("current");
+			    jQuery(this).find("a").addClass("current");
+			
+		    }
+		    jQuery( this ).addClass( "foo" );
+		});
+ 
+	    });
+	    </script>
+	   <?php
+	}
+	
+	if($u_role == 'job_provider'){
+	   ?>
+	   <script>
+	    jQuery(document).ready(function(){
+		jQuery( "#menu-users .wp-submenu li" ).each(function() {
+		    var li_text = jQuery( this ).text();
+		    if (li_text == 'User Access') {
+			if (jQuery(this).hasClass("current")) {
+			    //code
+			    jQuery(this).removeClass("current");
+			    jQuery(this).find("a").removeClass("current");
+			}
+		    }
+		    
+		    if (li_text == 'Employer') {			
+			    //code
+			    jQuery(this).addClass("current");
+			    jQuery(this).find("a").addClass("current");			
+		    }
+		});
+ 
+	    });
+	    </script>
+	   <?php
+	}
+	
+	$userListTable = new CustomCreate_List_Table();
+	
+	$userListTable->prepare_items();
+	
+	if( $page == 'user-access-list' && $id != '' ) {
+		
+		// After form submit save the user relation
+		if( isset($_REQUEST['submit']) && ( $_REQUEST['submit'] == 'Save Now' ) ) {
+			$user_ids = serialize($_POST["relationwith"]);
+			//print_r($user_ids);
+			$user_permission = $_REQUEST['usersPermission']?$_REQUEST['usersPermission']:'';
+			update_user_meta( $id, 'users_permission', $user_permission );
+			update_user_meta( $id, 'relation_with_users', $user_ids );
+			$message = "Data successfully saved.";
+		}
+		?>
+		<div class="wrap">
+			<div id="icon-users" class="icon32"></div>
+			<h2>User Access Edit Page</h2>
+			<?php echo $message; ?>
+			<form name="userRelationFrm" id="" action="" method="post" enctype="multipart/form-data">
+				<?php 
+					$user_info = get_userdata($id);
+					//echo 'Username: ' . $user_info->user_login . "\n";
+					//echo 'User roles: ' . implode(', ', $user_info->roles) . "\n";
+					//echo 'User ID: ' . $user_info->ID . "\n";
+					// Register hooks
+					
+					$connected_users = get_user_meta($id, 'relation_with_users');
+					if( !empty($connected_users[0] )) {
+					    $user_ids_arr = unserialize($connected_users[0]);
+					}
+					//print_r($user_ids_arr);
+					$permission = get_user_meta($id, 'users_permission');
+					
+					if( !empty($msg) ) {
+						echo '<p>'.$msg.'</p>';
+					}
+				?>
+				<table class="form-table">
+					<tr>
+						<th><label for="usersPermission"><?php _e("Permission:"); ?></label></th>
+						<td>
+							<input type="radio" name="usersPermission" value="Enable" <?php if($permission[0]=='Enable') echo ' checked="checked"';?>> Enable &nbsp;&nbsp;&nbsp;
+							<input type="radio" name="usersPermission" value="Disable"  <?php if($permission[0]=='Disable') echo ' checked="checked"';?>> Disable &nbsp;&nbsp;&nbsp;
+						</td>
+					</tr>
+					<?php /*
+					<tr>
+						<th><label for="relatedUsers"><?php _e($user_info->user_login." connect with:"); ?></label></th>
+						<td>[ You must be carefull for the below listing users.<br/>If you checked one user, then you will see only this selected user at frontend.]
+
+							<?php
+							 $args = array(
+								'role'         => '',
+								'role__in'     => array(),
+								'role__not_in' => array(),
+								'meta_key'     => '',
+								'meta_value'   => '',
+								'meta_compare' => '',
+								'meta_query'   => array(),
+								'date_query'   => array(),        
+								'include'      => array(),
+								'exclude'      => array(1, $id),
+								'orderby'      => 'login',
+								'order'        => 'ASC',
+								'offset'       => '',
+								'search'       => '',
+								'number'       => -1,
+								'count_total'  => false,
+								'fields'       => 'all',
+								'who'          => '',
+							 ); 
+							 $users = get_users($args);
+							 echo '<ul>';
+							 foreach ($users as $user) {
+								if( !empty($user_ids_arr) ) {
+								  $checked = (in_array($user->ID, $user_ids_arr)) ? ' checked="checked"' : '';
+								}
+								echo '<li class="relationwith-'.$user->ID.'"><input type="checkbox" name="relationwith[]" value="'.$user->ID.'" '.$checked.'>'.$user->user_login.'</li>';
+							 }
+							 echo '</ul>';
+							 
+							?>
+						</td>
+					</tr>
+					*/ ?>
+					<tr>
+						<th></th>
+						<td><p class="submit"><input name="submit" id="submit" class="button button-primary" value="Save Now" type="submit"></p></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<?php
+	} else {
+		?>
+		<div class="wrap">
+			<div id="icon-users" class="icon32"></div>
+			<h2>User Access List Page</h2>
+			<?php echo $message; ?>
+			<?php if($u_role == 'job_seeker'){ ?>
+			<div class="seekers_form_wrap">
+			    <form action="javascript:void(0);" method="get" name="search_seeker">
+				<input type="text" name="u_search_zip" id="u_search_zip" value="<?php echo $_REQUEST['u_search_zip']?$_REQUEST['u_search_zip']:'';?>" placeholder="Type zipcode here">
+				<input type="text" name="u_search_city" id="u_search_city" value="<?php echo $_REQUEST['u_search_city']?$_REQUEST['u_search_city']:'';?>" placeholder="Type city here">			    
+				<input type="text" name="u_search_state" id="u_search_state" value="<?php echo $_REQUEST['u_search_state']?$_REQUEST['u_search_state']:'';?>" placeholder="Type state here">		
+			    
+				<select class="candi_star" name="candi_star">
+				    <option value="" >Select Candidate Rating:</option>
+				    <option value="1" <?php if($_GET["u_search_rating"] == 1){ echo "selected"; } ?>>1 Star</option>
+				    <option value="2" <?php if($_GET["u_search_rating"] == 2){ echo "selected"; } ?>>2 Star</option>
+				    <option value="3" <?php if($_GET["u_search_rating"] == 3){ echo "selected"; } ?>>3 Star</option>
+				    <option value="4" <?php if($_GET["u_search_rating"] == 4){ echo "selected"; } ?>>4 Star</option>
+				    <option value="4" <?php if($_GET["u_search_rating"] == 5){ echo "selected"; } ?>>5 Star</option>
+				</select>
+				
+				<div class="custom_radio advance_search">
+				    
+				    <?php
+				   $job_candidate_years_within = get_field('job_candidate_years_within','options');
+				   ?>
+					<label for="custom_reg_log_user_experience"><?php _e('Experience'); ?></label>					
+					<select name="custom_reg_log_user_exp_years" class="custom_reg_log_user_exp_years">
+					     <option value="">Select Years</option>
+					     <?php for($i=0; $i<=$job_candidate_years_within; $i++){?>
+						     <option value="<?php echo $i; ?>" <?php if($_REQUEST['u_search_years'] == $i){echo 'selected';} ?>><?php echo $i; ?></option>
+					     <?php }?>
+					</select>
+					<span>years</span>
+					<select name="custom_reg_log_user_exp_months" class="custom_reg_log_user_exp_months">
+					     <option value="">Select Months</option>
+					     <?php for($j=0; $j<=12; $j++){?>
+							<option value="<?php echo $j; ?>" <?php if($_REQUEST['u_search_months'] == $j){echo 'selected';} ?>><?php echo $j; ?></option>					
+						<?php }?>
+					</select>
+					<span>months</span>
+				   
+				</div>
+				
+				<div class="custom_radio advance_search">
+				    <p><?php _e('Candidate prefers which type of position: '); ?></p>
+				    <span><input name="u_search_practice_type" type="radio" value="Any Kind" <?php if( (isset($_GET["u_search_practice_type"]) && $_GET["u_search_practice_type"]=='Any Kind') || $_GET["u_search_practice_type"]=='') echo ' checked'; ?> /><em>Any Kind</em></span>
+				    <span><input name="u_search_practice_type" type="radio" value="Temporary" <?php if( isset($_GET["u_search_practice_type"]) && $_GET["u_search_practice_type"]=='Temporary' ) echo ' checked'; ?> /><em>Temporary</em></span>
+				    <span><input name="u_search_practice_type" type="radio" value="Permanent" <?php if( isset($_GET["u_search_practice_type"]) && $_GET["u_search_practice_type"]=='Permanent' ) echo ' checked'; ?> /><em>Permanent</em></span>
+				</div>
+				
+				<div class="custom_check advance_search">
+				    <p><?php _e('For which days do you have an open position?'); ?></p>
+				    <?php if($_GET["u_search_available"]){ 
+					$u_search_available = $_REQUEST['u_search_available'][0];				
+					$u_search_available = explode(",",$u_search_available);					
+					$u_search_available_array[] = $u_search_available;
+					$u_search_available_array_n = $u_search_available_array[0];
+				     }?>
+		
+				    <div class=checkbox-wrap id="u_s_available">
+					    <span><input name="u_search_available[]" type="checkbox" value="Monday" <?php if(isset($u_search_available_array_n) && in_array("Monday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Monday</em></span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Tuesday" <?php if(isset($u_search_available_array_n) && in_array("Tuesday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Tuesday</em> </span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Wednesday" <?php if(isset($u_search_available_array_n) && in_array("Wednesday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Wednesday</em> </span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Thursday" <?php if(isset($u_search_available_array_n) && in_array("Thursday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Thursday</em></span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Friday" <?php if(isset($u_search_available_array_n) && in_array("Friday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Friday</em> </span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Saturday" <?php if(isset($u_search_available_array_n) && in_array("Saturday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Saturday</em></span>
+					    <span><input name="u_search_available[]" type="checkbox" value="Sunday" <?php if(isset($u_search_available_array_n) && in_array("Sunday", $u_search_available_array_n)) echo ' checked'; ?> /><em>Sunday</em></span>
+				    </div>
+				</div>
+				
+				<input id="search_seeker_button" class="button" type="button" name="" value="FILTER" />
+			    </form>
+			
+			</div><!-- .Seekers_form_wrap-->
+			<?php } ?>
+			<form id="users-table" method="GET">
+				<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+				<?php $userListTable->search_box('search', 'search_id'); ?>
+				
+				<!--<p class="search-box">
+					<label class="screen-reader-text" for="search_id-search-input">search:</label> 
+					<input id="search_id-search-input" type="text" name="s" value="" />
+					<input id="search-submit" class="button" type="submit" name="" value="search" />
+				</p>           
+				-->
+				<?php $userListTable->display(); ?>
+			</form>
+			
+			
+			
+		</div>
+		<?php
+	}
+}
+
+// User Settings page
+function user_settings_function() {
+	$page = $_REQUEST['page'];
+	
+	if( $page == 'user-settings' ) {
+		// After form submit save the user relation
+		if( isset($_REQUEST['submit']) && ( $_REQUEST['submit'] == 'Save' ) ) {
+			//update_option( $option, $new_value, $autoload );
+			update_option( 'user_login_url', $_REQUEST['userloginurl'] );
+			update_option( 'user_redirect_url_after_login', $_REQUEST['userredirecturl'] );
+			
+			
+			update_option( 'candi_redirect_url_after_login', $_REQUEST['candiredirecturl'] );
+			
+			
+			update_option( 'view_profile_url_after_login', $_REQUEST['viewprofileurl'] );
+			update_option( 'edit_profile_url_after_login', $_REQUEST['editprofileurl'] );
+			$message = "Data successfully saved.";
+		}
+	}
+	?>
+	<div class="wrap">
+		<div id="icon-users" class="icon32"></div>
+		<h2>User Setings Page</h2>
+		<?php echo $message; ?>
+		<form id="users-settings-table" method="GET">
+			<input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
+			<?php //$viewStudentInfo->search_box('search', 'search_id'); ?>
+			<table class="form-table">
+				<tr>
+					<th><label for="userloginurl"><?php _e("User Login URl: "); ?></label></th>
+					<td><input type="text" name="userloginurl" id="userloginurl" value="<?php echo (get_option( 'user_login_url')?get_option( 'user_login_url'):'')?>" class="regular-text" /><br /><span class="description"><?php _e("Define login url."); ?></span></td>
+				</tr>
+				<tr>
+					<th><label for="userredirecturl"><?php _e("Employeer redirect URl: "); ?></label></th>
+					<td><input type="text" name="userredirecturl" id="userredirecturl" value="<?php echo (get_option( 'user_redirect_url_after_login')?get_option( 'user_redirect_url_after_login'):'')?>" class="regular-text" /><br /><span class="description"><?php _e("Define redirecr url."); ?></span></td>
+				</tr>
+				
+				
+				
+				
+				<tr>
+					<th><label for="candiredirecturl"><?php _e("Candidate redirect URl: "); ?></label></th>
+					<td><input type="text" name="candiredirecturl" id="candiredirecturl" value="<?php echo (get_option( 'candi_redirect_url_after_login')?get_option( 'candi_redirect_url_after_login'):'')?>" class="regular-text" /><br /><span class="description"><?php _e("Define candidate redirect url."); ?></span></td>
+				</tr>
+				
+				
+				
+				
+				
+				<tr>
+					<th><label for="viewprofileurl"><?php _e("View Profile URl: "); ?></label></th>
+					<td><input type="text" name="viewprofileurl" id="viewprofileurl" value="<?php echo (get_option( 'view_profile_url_after_login')?get_option( 'view_profile_url_after_login'):'')?>" class="regular-text" /><br /><span class="description"><?php _e("Define redirecr url."); ?></span></td>
+				</tr>
+				<tr>
+					<th><label for="editprofileurl"><?php _e("Edit Profile URl: "); ?></label></th>
+					<td><input type="text" name="editprofileurl" id="editprofileurl" value="<?php echo (get_option( 'edit_profile_url_after_login')?get_option( 'edit_profile_url_after_login'):'')?>" class="regular-text" /><br /><span class="description"><?php _e("Define redirecr url."); ?></span></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><p class="submit"><input name="submit" id="submit" class="button button-primary" value="Save" type="submit"></p></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<?php
+}
+
+//Start for column with
+function my_column_width_access_page() {
+    echo '<style type="text/css">';
+    echo '.column-permission { width:12%; }';
+    echo '.column-role { width:15%; }';
+    echo '.column-title { width:30%; }';
+    echo '</style>';
+}
+add_action('admin_head', 'my_column_width_access_page');
+//End for column with
+
+?>
