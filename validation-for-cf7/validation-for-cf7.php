@@ -13,16 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'Error!' );
 }
 
-require_once( 'include/setting-option.php' );
-require_once( 'include/setting-option-jquery.php' );
 
 function vfcf7_enqueue_scripts(){
 
-    wp_enqueue_script( 'jquery-maskedinput', plugin_dir_url( __FILE__ ) . 'js/jquery.maskedinput.js' );
-    wp_enqueue_script( 'jquery-vfcf7', plugin_dir_url( __FILE__ ) . 'js/vfcf7.js' );
+    wp_enqueue_script( 'jquery-maskedinput', plugin_dir_url( __FILE__ ) . 'js/jquery.maskedinput.js', array('jquery'),'', true );
+    wp_enqueue_script( 'jquery-vfcf7', plugin_dir_url( __FILE__ ) . 'js/vfcf7_common.js', array('jquery'),'', true );
+
 
 }
 add_action( 'wp_enqueue_scripts', 'vfcf7_enqueue_scripts' );
+
+
+require_once( 'include/setting-option.php' );
+require_once( 'include/setting-option-jquery.php' );
 
 //**************====================================Email Validation===========================**************//
 

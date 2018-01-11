@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'Error!' );
 }
 function vfcf7_register_settings() {
+    
     //add_option( 'vfcf7_option_name', 'This is my option value.');
     register_setting( 'vfcf7_options_group', 'vfcf7_option_name', 'vfcf7_callback' );
     register_setting( 'vfcf7_options_group', 'vfcf7_option_name1', 'vfcf7_callback' );
@@ -19,6 +20,7 @@ function vfcf7_register_options_page() {
 add_action('admin_menu', 'vfcf7_register_options_page');
 function vfcf7_options_page()
 {
+
     ?>
     <div>
         <?php screen_icon(); ?>
@@ -26,12 +28,7 @@ function vfcf7_options_page()
         <form method="post" action="options.php">
             <?php settings_fields( 'vfcf7_options_group' ); ?>
             <p>Some text here.</p>
-            <table>
-                <tr valign="top">
-                    <th scope="row"><label for="vfcf7_option_name">Telephone</label></th>
-                    <td><input type="text" id="vfcf7_option_name" name="vfcf7_option_name" value="<?php echo get_option('vfcf7_option_name'); ?>" /></td>
-                    <td><em>Enter a class name eg:phone and use like:[tel* tel-372 class:phone]</em></td>
-                </tr>
+            <table>               
                 <tr valign="top">
                     <th scope="row"><label for="vfcf7_option_name1">Zipcode</label></th>
                     <td><input type="text" id="vfcf7_option_name1" name="vfcf7_option_name1" value="<?php echo get_option('vfcf7_option_name1'); ?>" /></td>
